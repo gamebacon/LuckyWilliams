@@ -26,6 +26,7 @@ public class RegistrationService {
 
         Optional<ConfirmationToken> optional = confirmationTokenService.getToken(tokenString);
 
+
         if(optional.isEmpty()) {
             return ConfirmationTokenResponse.BAD_TOKEN;
         }

@@ -24,7 +24,10 @@ public class RegistrationController {
 
     @GetMapping("/register/confirm")
     public String confirmRegistration(@RequestParam(value = "token", defaultValue = "") String token, RedirectAttributes re) {
-        ConfirmationTokenResponse response = registrationService.confirmToken(token);
+        ConfirmationTokenResponse response = ConfirmationTokenResponse.BAD_TOKEN;
+
+        if(!token.isEmpty())
+            response = registrationService.confirmToken(token);
 
         System.out.println(String.format("Response name() ->%s<-", response.name()));
         re.addFlashAttribute("response", response.name());

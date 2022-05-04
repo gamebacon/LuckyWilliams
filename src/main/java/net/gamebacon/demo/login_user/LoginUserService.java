@@ -28,7 +28,10 @@ public class LoginUserService implements UserDetailsService {
         if(emailExists)
             throw new IllegalStateException("This email is already registered");
 
-        loginUser.setPassword(cryptPasswordEncoder.encode(loginUser.getPassword()));
+        String encryptedPassword = cryptPasswordEncoder.encode(loginUser.getPassword());
+
+        //TODO: Remove comment below.
+        //loginUser.setPassword(encryptedPassword);
 
         loginUserRepository.save(loginUser);
 
