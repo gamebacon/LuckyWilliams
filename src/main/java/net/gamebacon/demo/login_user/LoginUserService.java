@@ -1,6 +1,8 @@
 package net.gamebacon.demo.login_user;
 
 import lombok.AllArgsConstructor;
+import net.gamebacon.demo.registration.token.ConfirmationToken;
+import net.gamebacon.demo.registration.token.ConfirmationTokenService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,6 +15,7 @@ public class LoginUserService implements UserDetailsService {
 
     private LoginUserRepository loginUserRepository;
     private BCryptPasswordEncoder cryptPasswordEncoder;
+    private ConfirmationTokenService confirmationTokenService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -20,16 +23,26 @@ public class LoginUserService implements UserDetailsService {
     }
 
     public String signUpUser(LoginUser loginUser) {
-        boolean exists = loginUserRepository.findByEmail(loginUser.getEmail()).isPresent();
+        boolean emailExists = loginUserRepository.findByEmail(loginUser.getEmail()).isPresent();
 
-        if(exists)
+        if(emailExists)
             throw new IllegalStateException("This email is already registered");
 
         loginUser.setPassword(cryptPasswordEncoder.encode(loginUser.getPassword()));
 
         loginUserRepository.save(loginUser);
 
-        return "This totally works.";
+        ConfirmationToken confirmationToken = new ConfirmationToken(loginUser);
+
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+        //send email here
+
+        return confirmationToken.getToken();
+    }
+
+    public int enableLoginUser(String email) {
+        return loginUserRepository.enableLoginUser(email);
     }
 
 }

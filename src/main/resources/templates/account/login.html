@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th=”http://www.thymeleaf.org” xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="shared/_layout">
+<body>
+<div layout:fragment="content">
+    <div class="container p-lg-5">
+        <h3 class="text-center fw-bold">Login</h3>
+        <div class="p-lg-3 bg-white rounded-3 shadow w-25 mx-auto">
+            <form class="" method="post" th:action="@{/login/save}" th:object="${loginUser}">
+                <input type="hidden" th:field="*{id}">
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input class="form-control" type="email" th:field="*{email}" minlength="5" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input  class="form-control" type="password" th:field="*{password}" minlength="5" required>
+                </div>
+                <div class="mb-3">
+                    <span class="text-center">No account? <a href="/register">Register</a></span>
+                </div>
+                <div class="row">
+                    <button class="w-auto m-auto btn btn-primary" type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

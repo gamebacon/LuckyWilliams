@@ -19,6 +19,10 @@ import java.util.Collections;
 @Table(name = "login_user")
 @Entity
 public class LoginUser implements UserDetails {
+    /*
+     I had issues where the database didn't make the id auto increment
+     I had to apply this manually in mysql workbench
+      */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +57,7 @@ public class LoginUser implements UserDetails {
         this.role = role;
         this.expired = false;
         this.locked = false;
-        this.enabled = true;
+        this.enabled = false;
     }
 
     @Override

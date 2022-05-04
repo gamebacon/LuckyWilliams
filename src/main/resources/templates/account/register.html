@@ -3,7 +3,7 @@
 <body>
 <div layout:fragment="content">
     <div class="container p-lg-5">
-        <h3 class="text-center fw-bold">New user</h3>
+        <h3 class="text-center fw-bold">Register</h3>
         <div class="p-lg-3 bg-white rounded-3 shadow w-25 mx-auto">
             <form class="" method="post" th:action="@{/register/save}" th:object="${loginUser}">
                 <input type="hidden" th:field="*{id}">
@@ -13,7 +13,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <input class="form-control" type="text" th:field="*{email}" minlength="5" required>
+                    <input class="form-control" type="email" th:field="*{email}" minlength="5" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Password</label>
@@ -30,8 +30,11 @@
                     </select>
                 </div>
                 -->
-                <div class="row">
-                    <button class="btn btn-primary" type="submit">Register</button>
+                <div class="row mb-3">
+                    <span>Already registered? <a href="/login">Sign in</a></span>
+                </div>
+                <div class="row mb-3">
+                    <button class="w-auto m-auto btn btn-primary" type="submit">Register</button>
                 </div>
             </form>
         </div>
