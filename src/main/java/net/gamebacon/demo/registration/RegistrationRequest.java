@@ -12,7 +12,7 @@ import net.gamebacon.demo.user.Gender;
 public class RegistrationRequest {
 
     private String firstname;
-    private String lastname;
+    private String surname;
     private String username;
     private String password;
     private String repeatPassword;

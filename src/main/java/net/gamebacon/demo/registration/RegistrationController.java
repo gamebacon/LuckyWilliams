@@ -45,8 +45,10 @@ public class RegistrationController {
 
         try {
             registrationService.register(loginUser);
+
             re.addFlashAttribute("confirmEmail", loginUser.getEmail());
             re.addFlashAttribute("success", true);
+            return "redirect:/register";
         } catch (PasswordsNotMatchingException e) {
             re.addFlashAttribute("error", "The passwords do not match.");
         } catch (InvalidUsernameException e) {

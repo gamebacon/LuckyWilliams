@@ -65,7 +65,7 @@ public class RegistrationService {
         if(!validEmail)
             throw new InvalidUsernameException("Email not valid: " + request.getEmail());
 
-        LoginUser loginUser = new LoginUser(request.getUsername(), request.getPassword(), request.getEmail(), Role.DEFAULT, request.getGender());
+        LoginUser loginUser = new LoginUser(request.getUsername(), request.getPassword(), request.getEmail(), Role.DEFAULT, request.getGender(), request.getFirstname(), request.getSurname());
 
         String token = loginUserService.signUpUser(loginUser);
 

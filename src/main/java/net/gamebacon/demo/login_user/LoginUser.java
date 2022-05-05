@@ -30,6 +30,15 @@ public class LoginUser implements UserDetails {
     private Long id;
 
     @Column
+    private String firstname;
+
+    @Column
+    private String surname;
+
+    @Column
+    private Gender gender;
+
+    @Column
     private String username;
 
     @Column
@@ -51,10 +60,8 @@ public class LoginUser implements UserDetails {
     @Column
     private boolean isVerified;
 
-    @Column
-    private Gender gender;
 
-    public LoginUser(String username, String password, String email, Role role, Gender gender) {
+    public LoginUser(String username, String password, String email, Role role, Gender gender, String firstname, String surname) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -63,6 +70,8 @@ public class LoginUser implements UserDetails {
         this.isExpired = false;
         this.isLocked = false;
         this.isVerified = false;
+        this.firstname = firstname;
+        this.surname = surname;
     }
 
     @Override

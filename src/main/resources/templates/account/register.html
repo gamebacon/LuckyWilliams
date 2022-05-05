@@ -40,6 +40,16 @@
                     </div>
                 </div>
                 <div class="form-row">
+                    <div class="col-6 form-col">
+                        <label class="form-label">Firstname</label>
+                        <input class="form-control" type="text" th:value="${firstname}" th:field="*{firstname}" required>
+                    </div>
+                    <div class="col-6 form-col">
+                        <label class="form-label">Surname</label>
+                        <input class="form-control" type="text" th:value="${surname}" th:field="*{surname}" required>
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="col form-col">
                         <label class="form-label">Gender</label>
                         <select class="form-control" th:field="*{gender}">

@@ -44,7 +44,7 @@ public class LoginUserService implements UserDetailsService {
         if(isEmailPresent(request.getEmail()) && newUser)
             throw new UsernameTakenException(request.getEmail());
 
-        LoginUser loginUser = new LoginUser(request.getUsername(), request.getPassword(), request.getEmail(), request.getRole(), request.getGender());
+        LoginUser loginUser = new LoginUser(request.getUsername(), request.getPassword(), request.getEmail(), request.getRole(), request.getGender(), request.getFirstname(), request.getSurname());
 
         loginUser.setVerified(request.isEnabled());
 

@@ -17,6 +17,8 @@
             </tr>
             <tr>
                 <th>Id</th>
+                <th>Firstname</th>
+                <th>Surname</th>
                 <th>Username</th>
                 <th>Email</th>
                 <th>Verified</th>
@@ -27,6 +29,8 @@
                 <th:block th:each="user : ${listUsers}">
                     <tr class="">
                         <td>[[${user.id}]]</td>
+                        <td>[[${user.firstname}]]</td>
+                        <td>[[${user.surname}]]</td>
                         <td>[[${user.username}]]</td>
                         <td>[[${user.email}]]</td>
                         <td>[[${user.enabled}]]</td>
