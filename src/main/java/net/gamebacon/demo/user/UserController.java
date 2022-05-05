@@ -16,6 +16,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /*
     @GetMapping("/users")
     public String showUserList(Model model) {
         List<User> users = userService.getUsers();
@@ -60,5 +61,7 @@ public class UserController {
         }
         return "redirect:/users";
     }
+
+     */
 
 }

@@ -37,7 +37,7 @@ public class ConfirmationToken {
     @Column()
     private LocalDateTime confirmed;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(nullable = false, name = "login_user_id")
     private LoginUser loginUser;
 

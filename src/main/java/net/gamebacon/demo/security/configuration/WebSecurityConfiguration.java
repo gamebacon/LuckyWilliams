@@ -2,6 +2,7 @@ package net.gamebacon.demo.security.configuration;
 
 import lombok.AllArgsConstructor;
 import net.gamebacon.demo.login_user.LoginUserService;
+import net.gamebacon.demo.login_user.Role;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,14 +27,19 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/js/**", "/css/**","/register/**").permitAll()
-                //.antMatchers("/register/confirm/**").authenticated()
+                .antMatchers("/register/**", "/login", "/terms").permitAll()
+                .antMatchers("/js/**", "/css/**").permitAll()
+                .antMatchers("/users/**").hasAuthority(Role.ADMIN.name())
                 .anyRequest().authenticated()
-                .and()
-                .formLogin().loginPage("/login").permitAll()
-                .defaultSuccessUrl("/")
+                .and().exceptionHandling().accessDeniedPage("/access_denied")
+                .and().formLogin(form -> {
+                    form.loginPage("/login");
+                    form.defaultSuccessUrl("/");
+                    form.failureUrl("/login?error=true");
+                })
         ;
 
     }

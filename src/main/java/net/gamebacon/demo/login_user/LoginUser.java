@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.gamebacon.demo.user.Gender;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,22 +43,26 @@ public class LoginUser implements UserDetails {
     private Role role;
 
     @Column
-    private boolean expired;
+    private boolean isExpired;
 
     @Column
-    private boolean locked;
+    private boolean isLocked;
 
     @Column
-    private boolean enabled;
+    private boolean isVerified;
 
-    public LoginUser(String username, String password, String email, Role role) {
+    @Column
+    private Gender gender;
+
+    public LoginUser(String username, String password, String email, Role role, Gender gender) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
-        this.expired = false;
-        this.locked = false;
-        this.enabled = false;
+        this.gender = gender;
+        this.isExpired = false;
+        this.isLocked = false;
+        this.isVerified = false;
     }
 
     @Override
@@ -68,9 +73,9 @@ public class LoginUser implements UserDetails {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", role=" + role +
-                ", expired=" + expired +
-                ", locked=" + locked +
-                ", enabled=" + enabled +
+                ", expired=" + isExpired +
+                ", locked=" + isLocked +
+                ", isVerified=" + isVerified +
                 '}';
     }
 
@@ -92,12 +97,12 @@ public class LoginUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return !expired;
+        return !isExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return !locked;
+        return !isLocked;
     }
 
     @Override
@@ -105,9 +110,8 @@ public class LoginUser implements UserDetails {
         return true;
     }
 
-    @Override
     public boolean isEnabled() {
-        return enabled;
+        return isVerified;
     }
 
 }

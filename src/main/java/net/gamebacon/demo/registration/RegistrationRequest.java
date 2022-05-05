@@ -1,15 +1,26 @@
 package net.gamebacon.demo.registration;
 
 import lombok.*;
+import net.gamebacon.demo.login_user.Role;
+import net.gamebacon.demo.user.Gender;
 
 @Getter
-@AllArgsConstructor
+@Setter
+@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class RegistrationRequest {
 
-    private final String username;
-    private final String password;
-    private final String email;
+    private String firstname;
+    private String lastname;
+    private String username;
+    private String password;
+    private String repeatPassword;
+    private Gender gender;
+    private String email;
+    private boolean hasAcceptedTermsAndConditions;
+    private Role role;
+    private boolean enabled;
+    private Long id;
 
 }

@@ -5,6 +5,10 @@ import net.gamebacon.demo.email.EmailSender;
 import net.gamebacon.demo.login_user.LoginUser;
 import net.gamebacon.demo.login_user.LoginUserService;
 import net.gamebacon.demo.login_user.Role;
+import net.gamebacon.demo.registration.exception.InvalidUsernameException;
+import net.gamebacon.demo.registration.exception.NotAgreedToTermsAndConditions;
+import net.gamebacon.demo.registration.exception.PasswordsNotMatchingException;
+import net.gamebacon.demo.registration.exception.UsernameTakenException;
 import net.gamebacon.demo.registration.token.ConfirmationTokenResponse;
 import net.gamebacon.demo.registration.token.ConfirmationToken;
 import net.gamebacon.demo.registration.token.ConfirmationTokenService;
@@ -35,9 +39,9 @@ public class RegistrationService {
         confirmationTokenService.deleteToken(token.getId());
 
         if(token.getConfirmed() != null) {
-            return ConfirmationTokenResponse.CONSUMED;
+            return ConfirmationTokenResponse.TOKEN_CONSUMED;
         } else if(token.getExpires().isBefore(LocalDateTime.now())) {
-            return ConfirmationTokenResponse.EXPIRED;
+            return ConfirmationTokenResponse.TOKEN_EXPIRED;
         }
 
         confirmationTokenService.confirmToken(tokenString);
@@ -47,13 +51,22 @@ public class RegistrationService {
         return ConfirmationTokenResponse.SUCCESS;
     }
 
-    public String register(RegistrationRequest request) {
+    public String register(RegistrationRequest request) throws InvalidUsernameException, UsernameTakenException, PasswordsNotMatchingException, NotAgreedToTermsAndConditions {
+
+        if(!request.getPassword().equals(request.getRepeatPassword()))
+            throw new PasswordsNotMatchingException(request.getPassword());
+
+        if(!request.isHasAcceptedTermsAndConditions()) {
+            throw new NotAgreedToTermsAndConditions();
+        }
+
         boolean validEmail = emailValidator.test(request.getEmail());
 
         if(!validEmail)
-            throw new IllegalStateException("Email not valid: " + request.getEmail());
+            throw new InvalidUsernameException("Email not valid: " + request.getEmail());
 
-        LoginUser loginUser = new LoginUser(request.getUsername(), request.getPassword(), request.getEmail(), Role.DEFAULT);
+        LoginUser loginUser = new LoginUser(request.getUsername(), request.getPassword(), request.getEmail(), Role.DEFAULT, request.getGender());
+
         String token = loginUserService.signUpUser(loginUser);
 
         String link = String.format("http://localhost:8080/register/confirm?token=%s", token);

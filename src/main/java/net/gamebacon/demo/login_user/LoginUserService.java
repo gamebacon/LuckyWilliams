@@ -1,13 +1,19 @@
 package net.gamebacon.demo.login_user;
 
 import lombok.AllArgsConstructor;
+import net.gamebacon.demo.registration.RegistrationRequest;
+import net.gamebacon.demo.registration.exception.UsernameTakenException;
 import net.gamebacon.demo.registration.token.ConfirmationToken;
 import net.gamebacon.demo.registration.token.ConfirmationTokenService;
+import net.gamebacon.demo.user.NoSuchUserException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -19,27 +25,58 @@ public class LoginUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return loginUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("No such email: " + email));
+        Optional<LoginUser> loginUser = loginUserRepository.findByEmail(email);
+
+        if(loginUser.isEmpty())
+            throw new UsernameNotFoundException(email);
+
+        return loginUser.get();
     }
 
-    public String signUpUser(LoginUser loginUser) {
-        boolean emailExists = loginUserRepository.findByEmail(loginUser.getEmail()).isPresent();
+    private boolean isEmailPresent(String email) {
+        return loginUserRepository.findByEmail(email).isPresent();
+    }
 
-        if(emailExists)
-            throw new IllegalStateException("This email is already registered");
+    public void addUser(RegistrationRequest request) throws UsernameTakenException {
+
+        boolean newUser = request.getId() == null;
+
+        if(isEmailPresent(request.getEmail()) && newUser)
+            throw new UsernameTakenException(request.getEmail());
+
+        LoginUser loginUser = new LoginUser(request.getUsername(), request.getPassword(), request.getEmail(), request.getRole(), request.getGender());
+
+        loginUser.setVerified(request.isEnabled());
+
+        String encodedPassword = cryptPasswordEncoder.encode(loginUser.getPassword());
+
+        if(newUser)
+            loginUser.setPassword(encodedPassword);
+        else {
+
+            if(!loginUserRepository.getById(request.getId()).getPassword().equals(request.getPassword()))
+                loginUser.setPassword(encodedPassword);
+
+            loginUserRepository.deleteById(request.getId());
+        }
+
+        loginUserRepository.save(loginUser);
+    }
+
+    public String signUpUser(LoginUser loginUser) throws UsernameTakenException {
+
+        if(isEmailPresent(loginUser.getEmail()))
+            throw new UsernameTakenException(loginUser.getEmail());
 
         String encryptedPassword = cryptPasswordEncoder.encode(loginUser.getPassword());
 
-        //TODO: Remove comment below.
-        //loginUser.setPassword(encryptedPassword);
+        loginUser.setPassword(encryptedPassword);
 
         loginUserRepository.save(loginUser);
 
         ConfirmationToken confirmationToken = new ConfirmationToken(loginUser);
 
         confirmationTokenService.saveConfirmationToken(confirmationToken);
-
-        //send email here
 
         return confirmationToken.getToken();
     }
@@ -48,4 +85,24 @@ public class LoginUserService implements UserDetailsService {
         return loginUserRepository.enableLoginUser(email);
     }
 
+    public List<LoginUser> getUsers() {
+        return (List<LoginUser>) loginUserRepository.findAll();
+    }
+
+    public LoginUser getUser(Long id) throws NoSuchUserException {
+        Optional<LoginUser> user = loginUserRepository.findById(id);
+
+        if(user.isPresent())
+            return user.get();
+
+        throw new NoSuchUserException("There is no user with id: " + id);
+    }
+
+
+    public void deleteUser(Long id) throws NoSuchUserException {
+
+        LoginUser user = getUser(id);
+
+        loginUserRepository.deleteById(user.getId());
+    }
 }
