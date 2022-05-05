@@ -26,6 +26,10 @@
                         <a class="nav-link" href="/users">Users</a>
                     </li>
 
+                    <li class="nav-item active" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" href="/games">Games</a>
+                    </li>
+
 
                 </ul>
             </div>
