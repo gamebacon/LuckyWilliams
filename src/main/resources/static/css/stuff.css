@@ -50,7 +50,20 @@
 .form-row {
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
+}
+
+.center-form-row {
+    display: block;
+    margin: auto;
+}
+
+.form-row-minor {
+    font-size: 14px;
+}
+
+.form-label-extra {
+    margin-bottom: 0;
 }
 
 .form-col {

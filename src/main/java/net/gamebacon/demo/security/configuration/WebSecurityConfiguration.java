@@ -30,13 +30,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/register/**", "/login").anonymous() //Only anonymous can login/register
+                .antMatchers("/register/**", "/login", "/forgot-password/**").anonymous() //Only anonymous can login/register
                 .antMatchers("/", "/terms").permitAll() //everyone can see home page & essentials
                 .antMatchers("/games/**").authenticated() //only authenticated can play games
                 .antMatchers("/images/**", "/js/**", "/css/**").permitAll() //all need access to statis files
                 .antMatchers("/users/**").hasAuthority(Role.ADMIN.name()) // only admin can manage users
                 .anyRequest().authenticated()
-                .and().exceptionHandling().accessDeniedPage("/access_denied")
+                .and().exceptionHandling().accessDeniedPage("/access-denied")
                 .and().formLogin(form -> {
                     form.loginPage("/login");
                     form.defaultSuccessUrl("/");

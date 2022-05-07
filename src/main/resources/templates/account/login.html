@@ -3,7 +3,7 @@
 <body>
 <div layout:fragment="content">
     <div class="container">
-        <div class="form-container w-25">
+        <div class="form-container w-25 px-4">
             <form class="" method="post" th:action="@{/login}">
                 <h3 class="text-center fw-bold mb-3">Login</h3>
                 <div th:if="${response}">
@@ -25,19 +25,22 @@
                     <span class="response-info">Make sure the provided email and password are correct.</span>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
+                <div class="form-row">
+                    <label class="form-label-extra">Email</label>
                     <input class="form-control" name="username" type="email" minlength="5" required>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Password</label>
+                <div class="form-row">
+                    <label class="form-label-extra">Password</label>
                     <input  class="form-control" name="password" type="password" inlength="5" required>
                 </div>
-                <div class="row mb-3">
-                    <button class="w-auto m-auto btn btn-primary" type="submit">Login</button>
+                <div class="form-row my-4 mx-auto">
+                    <button class="w-75 mx-auto btn btn-primary" type="submit">Login</button>
                 </div>
-                <div class="">
-                    <p class="text-center">No account? <a href="/register">Sign up</a></p>
+                <div class="center-form-row form-row-minor text-center py-2">
+                    <span>No account? <a href="/register">Sign up</a></span>
+                </div>
+                <div class="center-form-row form-row-minor text-center mb-0 px-2">
+                    <span><a href="/forgot-password">Forgot password?</a></span>
                 </div>
             </form>
         </div>

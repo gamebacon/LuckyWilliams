@@ -21,37 +21,37 @@
                 <!--<input type="hidden" th:field="*{id}">-->
                 <div class="form-row">
                     <div class="col-5 form-col">
-                        <label class="form-label">Username</label>
+                        <label class="form-label-extra">Username</label>
                         <input class="form-control" type="text" th:field="*{username}" minlength="5" required>
                     </div>
                     <div class="col-7 form-col">
-                        <label class="form-label">Email</label>
+                        <label class="form-label-extra">Email</label>
                         <input class="form-control" type="email" th:value="${email}" th:field="*{email}" minlength="5" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col form-col">
-                        <label class="form-label">Password</label>
+                        <label class="form-label-extra">Password</label>
                         <input  class="form-control" type="password" th:field="*{password}" minlength="5" required>
                     </div>
                     <div class="col form-col">
-                        <label class="form-label">Repeat password</label>
+                        <label class="form-label-extra">Repeat password</label>
                         <input  class="form-control" type="password" th:field="*{repeatPassword}" minlength="5" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-6 form-col">
-                        <label class="form-label">Firstname</label>
+                        <label class="form-label-extra">Firstname</label>
                         <input class="form-control" type="text" th:value="${firstname}" th:field="*{firstname}" required>
                     </div>
                     <div class="col-6 form-col">
-                        <label class="form-label">Surname</label>
+                        <label class="form-label-extra">Surname</label>
                         <input class="form-control" type="text" th:value="${surname}" th:field="*{surname}" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col form-col">
-                        <label class="form-label">Gender</label>
+                        <label class="form-label-extra">Gender</label>
                         <select class="form-control" th:field="*{gender}">
                             <option th:value="'NA'" th:text="Select"></option>
                             <option th:value="'MALE'" th:text="Male"></option>
@@ -72,11 +72,11 @@
                         <label class="checkbox-label" for="eligible">I am 18 years old or older</label>
                     </div>
                 </div>
-                <div class="row mb-3 mt-5">
+                <div class="form-row">
                     <button class="w-auto m-auto btn btn-primary" type="submit">Register</button>
                 </div>
-                <div class="row">
-                    <span class="text-center">Already a member? <a href="/login">Sign in</a></span>
+                <div class="form-row-minor center-form-row text-center">
+                    <span>Already a member? <a href="/login">Sign in</a></span>
                 </div>
             </form>
         </div>

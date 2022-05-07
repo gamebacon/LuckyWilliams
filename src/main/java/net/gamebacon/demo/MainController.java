@@ -17,7 +17,7 @@ public class MainController {
         return "/error";
     }
 
-    @GetMapping("/access_denied")
+    @GetMapping("/access-denied")
     public String showDenied() {
         return "/access_denied";
     }

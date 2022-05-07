@@ -38,7 +38,6 @@ public class RegistrationController {
     @PostMapping("/register/save")
     public String saveUser(@ModelAttribute  RegistrationRequest loginUser, RedirectAttributes re) {
 
-        //System.out.println(((RegistrationRequest) re.getFlashAttributes().get("loginUser")).toString());
 
         try {
             registrationService.register(loginUser);
