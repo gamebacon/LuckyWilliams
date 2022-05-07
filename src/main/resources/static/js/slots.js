@@ -1,57 +1,55 @@
 
-
-
-
-
-
-const SLOTS_SPIN_BUTTON = document.getElementById("slotsSpin");
-
 const WHEEL_ELEMENTS = [
     document.getElementById("slot-wheel-1"),
     document.getElementById("slot-wheel-2"),
     document.getElementById("slot-wheel-3"),
 ]
 
+//firefox block audio?
+const coinSound = new Audio("/sound/coin.mp3");
+coinSound.volume = .25
+
+const loseSound = new Audio("/sound/spin.mp3");
+const winSound = new Audio("/sound/spin.mp3");
+
 const intervals = [WHEEL_ELEMENTS.length]
 
-async function spin(result) {
+const spins = [0, 0, 0]
+let maxSpins = rand(15)
 
-    console.log("Result: " + result);
+let _result = []
 
+function spin(result) {
+    _result = result;
+    for(let i = 0; i < WHEEL_ELEMENTS.length; i++)
+        startIntervalls(i)
+}
 
-    for(let i = 0; i < WHEEL_ELEMENTS.length; i++) {
-        //intervals[i] = setInterval(spinWheel(WHEEL_ELEMENTS[i], i), 100);
-        startIntervalls(WHEEL_ELEMENTS[i], i);
+function startIntervalls(wheelIndex) {
+    const maxSpin = 10;
+    intervals[wheelIndex] = setInterval(spinOnce, 200, wheelIndex, maxSpin);
+}
+
+function spinOnce(wheelIndex, maxSpin) {
+    let num = rand(9);
+    let wheel = WHEEL_ELEMENTS[wheelIndex];
+    if(wheelIndex === 2)
+        playSpinSound()
+    if(spins[wheelIndex] >= maxSpin + (wheelIndex + 1) * 5) {
+        num = _result[wheelIndex]
+        clearInterval(intervals[wheelIndex])
+        coinSound.play();
     }
-
-}
-
-function startIntervalls(wheel, index) {
-
-    intervals[index] = setInterval(spinOnce(wheel), 100);
-
-}
-
-function spinOnce(wheel) {
-
-    let num = rand(10);
-    console.log("spin once! " + num)
+    wheel.className = `tile-${num}`;
     wheel.innerText = num.toString();
+    spins[wheelIndex]++;
 }
 
-
-
-
-
-
-
-
-function delay(ms) {
-    return new Promise( resolve => {
-        setTimeout(() => resolve(''), ms)
-    })
+function playSpinSound() {
+    sound = new Audio("/sound/spin.mp3")
+    sound.volume = .3
+    sound.play()
 }
-
 
 function rand(max) {
     return Math.floor(Math.random() * max)

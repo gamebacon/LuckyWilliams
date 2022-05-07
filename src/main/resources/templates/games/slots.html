@@ -9,7 +9,7 @@
 <div layout:fragment="content">
     <div class="text-center slot border-5">
         <h1 class="fw-bolder h1">Slots</h1>
-        <form method="post" th:action="@{/games/slots/spin}">
+        <!--<form method="post" th:action="@{/games/slots/spin}">-->
             <div class="m-auto text-center">
 
             <div class="win-text">
@@ -18,29 +18,32 @@
 
             <div th:if="${result}">
                 <div class="row wheel-container" th:if="${result.wheels}">
-                    <div id="slot-wheel-1" class="col wheel" th:text="${result.wheels[0]}">
+                    <div id="slot-wheel-1" class="" th:text="${result.wheels[0]}">
                     </div>
-                    <div id="slot-wheel-2" class="col wheel" th:text="${result.wheels[1]}">
+                    <div id="slot-wheel-2" class="" th:text="${result.wheels[1]}">
                     </div>
-                    <div id="slot-wheel-3" class="col wheel" th:text="${result.wheels[2]}">
+                    <div id="slot-wheel-3" class="" th:text="${result.wheels[2]}">
                     </div>
                 </div>
 
             </div>
 
             <div class="button-container">
-                <button class="spin-button btn-primary btn-lg">Button1</button>
-                <button id="slotsSpin" class="spin-button btn-danger btn-lg" type="submit">Spin</button>
-                <button class="spin-button btn-secondary btn-lg">Button2</button>
+                <button type="button" class="spin-button btn-primary btn-lg">Button1</button>
+                <button id="slotsSpin" class="spin-button btn-danger btn-lg" onclick="$.ajax('/games/slots/spin', null)">Spin</button>
+                <!--<a type="" href="/games/slots/spin" class="btn btn-primary spin-button">Spin</a>-->
+                <button type="button" class="spin-button btn-secondary btn-lg">Button2</button>
             </div>
             </div>
-        </form>
+        <!--</form>-->
     </div>
     <script src="/js/slots.js"></script>
 
     <script th:inline="javascript">
         var wheelResult = [[${result.wheels}]]
-        spin(wheelResult)
+
+        if(wheelResult[0] > -1)
+            spin(wheelResult)
     </script>
 
 </div>

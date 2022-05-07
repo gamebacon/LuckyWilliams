@@ -25,7 +25,7 @@ public class SlotsController {
     }
 
 
-    @PostMapping("/games/slots/spin")
+    @GetMapping("/games/slots/spin")
     public String spin(RedirectAttributes redirectAttributes) {
 
         //can afford?
