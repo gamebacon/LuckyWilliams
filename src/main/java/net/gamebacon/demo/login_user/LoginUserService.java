@@ -28,7 +28,7 @@ public class LoginUserService implements UserDetailsService {
         Optional<LoginUser> loginUser = loginUserRepository.findByEmail(email);
 
         if(loginUser.isEmpty())
-            throw new UsernameNotFoundException(email);
+            throw new UsernameNotFoundException(String.format("The email \"%s\" were not found in the system.", email));
 
         return loginUser.get();
     }
@@ -104,5 +104,9 @@ public class LoginUserService implements UserDetailsService {
         LoginUser user = getUser(id);
 
         loginUserRepository.deleteById(user.getId());
+    }
+
+    public void setPassword(Long id, String encodedPassword) {
+        loginUserRepository.setPassword(id, encodedPassword);
     }
 }

@@ -30,7 +30,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/register/**", "/login", "/forgot-password/**").anonymous() //Only anonymous can login/register
+                .antMatchers("/register/**", "/login", "/forgot-password/**", "/forgot-password-reset/**").anonymous() //Only anonymous can login/register
                 .antMatchers("/", "/terms").permitAll() //everyone can see home page & essentials
                 .antMatchers("/games/**").authenticated() //only authenticated can play games
                 .antMatchers("/images/**", "/js/**", "/css/**").permitAll() //all need access to statis files

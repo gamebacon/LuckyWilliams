@@ -20,12 +20,12 @@ public class RegistrationService {
 
     private EmailValidator emailValidator;
     private LoginUserService loginUserService;
-    private ConfirmationTokenService confirmationTokenService;
+    private ConfirmationTokenService tokenService;
     private EmailSender emailSender;
 
     public ConfirmationTokenResponse confirmToken(String tokenString) {
 
-        Optional<ConfirmationToken> optional = confirmationTokenService.getToken(tokenString);
+        Optional<ConfirmationToken> optional = tokenService.getToken(tokenString);
 
 
         if(optional.isEmpty()) {
@@ -33,7 +33,8 @@ public class RegistrationService {
         }
 
         ConfirmationToken token = optional.get();
-        confirmationTokenService.deleteToken(token.getId());
+        tokenService.deleteToken(token.getId());
+        //ConfirmationTokenResponse response = tokenService.validateToken(token);
 
         if(token.getConfirmed() != null) {
             return ConfirmationTokenResponse.TOKEN_CONSUMED;
@@ -41,7 +42,7 @@ public class RegistrationService {
             return ConfirmationTokenResponse.TOKEN_EXPIRED;
         }
 
-        confirmationTokenService.confirmToken(tokenString);
+        tokenService.confirmToken(tokenString);
         String email = token.getLoginUser().getEmail();
         loginUserService.enableLoginUser(email);
 

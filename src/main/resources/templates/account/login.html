@@ -6,6 +6,12 @@
         <div class="form-container w-25 px-4">
             <form class="" method="post" th:action="@{/login}">
                 <h3 class="text-center fw-bold mb-3">Login</h3>
+                <div th:if="${passwordChange}" class="alert alert-success text-center">
+                    <h4>Password changed!</h4>
+                    <span class="response-info">
+                        You may now login with your new password.
+                    </span>
+                </div>
                 <div th:if="${response}">
                     <div th:if="${response} == 'SUCCESS'" class="alert alert-success text-center">
                         <h4>Congratulations!</h4>
