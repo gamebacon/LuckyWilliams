@@ -9,10 +9,18 @@ import java.util.Arrays;
 public class SlotsService {
 
 
-    public int[] spin()  {
+    public SlotsSessionResults spin()  {
         int[] wheelResult = getWheels();
+        float winAmount = 0;
 
-        return wheelResult;
+        if(isWin(wheelResult))
+            winAmount = 10;
+
+        //set balance here
+
+        SlotsSessionResults result = new SlotsSessionResults(winAmount, wheelResult);
+
+        return result;
     }
 
     private int[] getWheels() {
@@ -32,7 +40,7 @@ public class SlotsService {
 
         for(int i = 0; i < len; i++) {
 
-            if((i < len-1) && wheel[i] != wheel[i + 1]) {
+            if((i < len - 1) && wheel[i] != wheel[i + 1]) {
                 win = false;
             }
         }

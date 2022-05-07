@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th=”http://www.thymeleaf.org” xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="shared/_layout">
 <body>
 <div layout:fragment="content">
-    <div class="container p-lg-5">
-        <h3 class="text-center fw-bold">Sign up</h3>
+    <div class="container">
         <div class="form-container" style="width: 500px;">
             <form class="" method="post" th:action="@{/register/save}" th:object="${loginUser}">
+                <h3 class="text-center fw-bold mb-3">Sign up</h3>
 
                 <div class="text-center alert alert-danger mx-auto mb-4" th:if="${error}">
                     <h6>There was an issue.</h6>
@@ -60,19 +60,25 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-auto my-1">
-                    <div class="text-left checkbox-wrapper">
+                <div class="form-row">
+                    <div class="checkbox-wrapper">
                         <input th:checked="${hasAcceptedTermsAndConditions}" th:field="*{hasAcceptedTermsAndConditions}" type="checkbox" id="terms" class="checkbox">
-                        <label class="checkbox-label" for="terms">I have read and agree with the <a href="/terms" target="_blank">terms and conditions</a></label>
+                        <label class="checkbox-label" for="terms">I have read and agree to the <a href="/terms" target="_blank">terms and conditions</a></label>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="form-row">
+                    <div class="checkbox-wrapper">
+                        <input th:checked="${eligible}" th:field="*{eligible}" type="checkbox" id="eligible" class="checkbox">
+                        <label class="checkbox-label" for="eligible">I am 18 years old or older</label>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-5">
                     <button class="w-auto m-auto btn btn-primary" type="submit">Register</button>
                 </div>
+                <div class="row">
+                    <span class="text-center">Already a member? <a href="/login">Sign in</a></span>
+                </div>
             </form>
-        </div>
-        <div class="row p-3">
-            <span class="text-center">Already registered? <a href="/login">Sign in</a></span>
         </div>
     </div>
 </div>

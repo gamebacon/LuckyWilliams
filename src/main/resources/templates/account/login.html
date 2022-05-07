@@ -2,14 +2,17 @@
 <html lang="en" xmlns:th=”http://www.thymeleaf.org” xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="shared/_layout">
 <body>
 <div layout:fragment="content">
-    <div class="container p-lg-5">
-        <h3 class="text-center fw-bold">Login</h3>
-        <div class="form-container">
+    <div class="container">
+        <div class="form-container w-25">
             <form class="" method="post" th:action="@{/login}">
+                <h3 class="text-center fw-bold mb-3">Login</h3>
                 <div th:if="${response}">
                     <div th:if="${response} == 'SUCCESS'" class="alert alert-success text-center">
-                        <h4>Success!</h4>
-                        <span class="response-info">Your account was verified!</span>
+                        <h4>Congratulations!</h4>
+                        <span class="response-info">
+                            Your account was verified!
+                            You may now login.
+                        </span>
                     </div>
                     <div th:unless="${response} == 'SUCCESS'" class="alert alert-danger text-center">
                         <h4>There was an issue.</h4>
@@ -19,7 +22,6 @@
 
                 <div class="alert alert-danger mx-auto mb-4" th:if="${error}">
                     <h6>Login attempt failed.</h6>
-                    <!--<span class="response-info"  th:text="${error}"></span>-->
                     <span class="response-info">Make sure the provided email and password are correct.</span>
                 </div>
 
@@ -31,13 +33,13 @@
                     <label class="form-label">Password</label>
                     <input  class="form-control" name="password" type="password" inlength="5" required>
                 </div>
-                <div class="row">
+                <div class="row mb-3">
                     <button class="w-auto m-auto btn btn-primary" type="submit">Login</button>
                 </div>
+                <div class="">
+                    <p class="text-center">No account? <a href="/register">Sign up</a></p>
+                </div>
             </form>
-        </div>
-        <div class="p-3">
-            <p class="text-center">No account? <a href="/register">Sign up</a></p>
         </div>
     </div>
 </div>

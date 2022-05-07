@@ -1,10 +1,7 @@
 package net.gamebacon.demo.registration;
 
 import net.gamebacon.demo.login_user.LoginUser;
-import net.gamebacon.demo.registration.exception.InvalidUsernameException;
-import net.gamebacon.demo.registration.exception.NotAgreedToTermsAndConditions;
-import net.gamebacon.demo.registration.exception.PasswordsNotMatchingException;
-import net.gamebacon.demo.registration.exception.UsernameTakenException;
+import net.gamebacon.demo.registration.exception.*;
 import net.gamebacon.demo.registration.token.ConfirmationToken;
 import net.gamebacon.demo.registration.token.ConfirmationTokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +46,10 @@ public class RegistrationController {
             re.addFlashAttribute("confirmEmail", loginUser.getEmail());
             re.addFlashAttribute("success", true);
             return "redirect:/register";
+        } catch (NotEligibleException notEligibleException) {
+            re.addFlashAttribute("error", "You must confirm that you're 18 years old or older.");
+        } catch (NotAgreedToTermsAndConditions notAgreedToTermsAndConditions) {
+            re.addFlashAttribute("error", "You must agree with our terms and conditions in order to proceed.");
         } catch (PasswordsNotMatchingException e) {
             re.addFlashAttribute("error", "The passwords do not match.");
         } catch (InvalidUsernameException e) {
@@ -57,10 +58,7 @@ public class RegistrationController {
         } catch (UsernameTakenException e) {
             loginUser.setEmail("");
             re.addFlashAttribute("error", "The email is already being used.");
-        } catch (NotAgreedToTermsAndConditions notAgreedToTermsAndConditions) {
-            re.addFlashAttribute("error", "You must agree with our terms and conditions in order to proceed.");
         }
-
         //add present fields before redirect
         re.addFlashAttribute("loginUser", loginUser);
 
@@ -75,8 +73,6 @@ public class RegistrationController {
         if(!token.isEmpty()) {
             response = registrationService.confirmToken(token);
         }
-
-        System.out.println(String.format("Response name() ->%s<-", response.name()));
 
         redirectAttributes.addFlashAttribute("response", response.name());
 

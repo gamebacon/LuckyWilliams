@@ -1,13 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th=”http://www.thymeleaf.org” xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="shared/_layout">
 
+<head>
+    <link rel="stylesheet" href="/css/slots.css">
+    <script src="/js/slots.js"></script>
+</head>
+
 <body>
 <div layout:fragment="content">
-    <div class="text-center">
-        <h1>slots!</h1>
-        <div th:if="${wheel}"  th:text="${wheel}"></div>
-        <button href="games/slots/spin">Spin</button>
+    <div class="text-center slot border-5">
+        <h1 class="fw-bolder h1">Slots</h1>
+        <form method="post" th:action="@{/games/slots/spin}">
+            <div class="m-auto text-center">
+
+            <div class="win-text">
+                Win: $<span th:if="${result}" th:text="${result.winAmount}"></span>
+            </div>
+
+            <div th:if="${result}">
+                <div class="row wheel-container" th:if="${result.wheels}">
+                    <div id="slot-wheel-1" class="col wheel" th:text="${result.wheels[0]}">
+                    </div>
+                    <div id="slot-wheel-2" class="col wheel" th:text="${result.wheels[1]}">
+                    </div>
+                    <div id="slot-wheel-3" class="col wheel" th:text="${result.wheels[2]}">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="button-container">
+                <button class="spin-button btn-primary btn-lg">Button1</button>
+                <button id="slotsSpin" class="spin-button btn-danger btn-lg" type="submit">Spin</button>
+                <button class="spin-button btn-secondary btn-lg">Button2</button>
+            </div>
+            </div>
+        </form>
     </div>
+
+    <script th:inline="javascript">
+        var wheelResult = [[${result.wheels}]]
+        spin(wheelResult)
+    </script>
+
 </div>
+
+
+
 </body>
 </html>

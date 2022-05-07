@@ -1,13 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th=”http://www.thymeleaf.org” xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="shared/_layout">
+<html lang="en" xmlns:th=”http://www.thymeleaf.org” xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="shared/_layout" xmlns:sec="http://www.w3.org/1999/xhtml">
 
-<body>
+<body class="home-page">
     <div layout:fragment="content">
-        <div class="text-center alert-success alert-success">
+
+        <div sec:authorize="isAuthenticated()" class="text-center alert-success alert-success">
             <h1>
                 Welcome <span th:text="${#authentication.getPrincipal().getUsername()}"></span>!
             </h1>
         </div>
+        <div sec:authorize="isAnonymous()" class="become-member">
+            <h1 class="fw-bolder">Membership</h1>
+            <span class="h3 fw-bold">Become a member today and get 100 FREE credits!</span>
+            <br>
+            <a class="h4 fw-bold" href="/register">Sign up</a>
+        </div>
+
     </div>
 </body>
+
 </html>

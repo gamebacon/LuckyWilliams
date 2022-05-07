@@ -1,0 +1,25 @@
+
+
+nav {
+    opacity: .85;
+}
+
+body {
+    background-image: url("/images/background.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+main {
+    /*
+        main.height -= (header.height + footer.height + extra)
+     */
+    min-height: calc(100vh - (40px + 48px + 1px));
+}
+
+footer {
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    opacity: .85;
+}

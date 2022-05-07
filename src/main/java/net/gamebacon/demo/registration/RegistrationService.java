@@ -5,10 +5,7 @@ import net.gamebacon.demo.email.EmailSender;
 import net.gamebacon.demo.login_user.LoginUser;
 import net.gamebacon.demo.login_user.LoginUserService;
 import net.gamebacon.demo.login_user.Role;
-import net.gamebacon.demo.registration.exception.InvalidUsernameException;
-import net.gamebacon.demo.registration.exception.NotAgreedToTermsAndConditions;
-import net.gamebacon.demo.registration.exception.PasswordsNotMatchingException;
-import net.gamebacon.demo.registration.exception.UsernameTakenException;
+import net.gamebacon.demo.registration.exception.*;
 import net.gamebacon.demo.registration.token.ConfirmationTokenResponse;
 import net.gamebacon.demo.registration.token.ConfirmationToken;
 import net.gamebacon.demo.registration.token.ConfirmationTokenService;
@@ -51,13 +48,17 @@ public class RegistrationService {
         return ConfirmationTokenResponse.SUCCESS;
     }
 
-    public String register(RegistrationRequest request) throws InvalidUsernameException, UsernameTakenException, PasswordsNotMatchingException, NotAgreedToTermsAndConditions {
+    public String register(RegistrationRequest request) throws InvalidUsernameException, UsernameTakenException, PasswordsNotMatchingException, NotAgreedToTermsAndConditions, NotEligibleException {
 
         if(!request.getPassword().equals(request.getRepeatPassword()))
             throw new PasswordsNotMatchingException(request.getPassword());
 
         if(!request.isHasAcceptedTermsAndConditions()) {
             throw new NotAgreedToTermsAndConditions();
+        }
+
+        if(!request.isEligible()) {
+            throw new NotEligibleException();
         }
 
         boolean validEmail = emailValidator.test(request.getEmail());

@@ -18,6 +18,7 @@ public class RegistrationRequest {
     private String repeatPassword;
     private Gender gender;
     private String email;
+    private boolean eligible;
     private boolean hasAcceptedTermsAndConditions;
     private Role role;
     private boolean enabled;
