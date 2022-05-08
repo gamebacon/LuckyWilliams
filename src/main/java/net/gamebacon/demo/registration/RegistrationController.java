@@ -42,9 +42,9 @@ public class RegistrationController {
         try {
             registrationService.register(loginUser);
 
-            re.addFlashAttribute("confirmEmail", loginUser.getEmail());
+            //re.addFlashAttribute("confirmEmail", loginUser.getEmail());
             re.addFlashAttribute("success", true);
-            return "redirect:/register";
+            return "redirect:/login";
         } catch (NotEligibleException notEligibleException) {
             re.addFlashAttribute("error", "You must confirm that you're 18 years old or older.");
         } catch (NotAgreedToTermsAndConditions notAgreedToTermsAndConditions) {
@@ -64,19 +64,6 @@ public class RegistrationController {
         return "redirect:/register";
     }
 
-    @GetMapping("/register/confirm")
-    public String confirmRegistration(@RequestParam(value = "token", defaultValue = "") String token, RedirectAttributes redirectAttributes) {
-
-        ConfirmationTokenResponse response = ConfirmationTokenResponse.BAD_TOKEN;
-
-        if(!token.isEmpty()) {
-            response = registrationService.confirmToken(token);
-        }
-
-        redirectAttributes.addFlashAttribute("response", response.name());
-
-        return "redirect:/login";
-    }
 
 
 

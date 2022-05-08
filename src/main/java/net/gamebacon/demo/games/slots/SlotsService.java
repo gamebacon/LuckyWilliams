@@ -61,4 +61,7 @@ public class SlotsService {
     }
 
 
+    public double getBalance(Long id) {
+        return userService.getBalance(id);
+    }
 }

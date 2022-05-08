@@ -5,17 +5,56 @@
 <body class="home-page">
     <div layout:fragment="content">
 
-        <div sec:authorize="isAuthenticated()" class="text-center alert-success alert-success">
+        <!--
+        <div sec:authorize="isAuthenticated()" class="text-center fw-bolder">
             <h1>
-                Welcome <span th:text="${#authentication.getPrincipal().getUsername()}"></span>!
+                Welcome <span th:text="${user.getUsername()}"></span>!
             </h1>
         </div>
+        -->
+
         <div sec:authorize="isAnonymous()" class="become-member">
             <h1 class="fw-bolder">Membership</h1>
             <span class="h3 fw-bold">Become a member today and get 100 FREE credits!</span>
             <br>
             <a class="h4 fw-bold" href="/register">Sign up</a>
         </div>
+
+        <div sec:authorize="isAuthenticated()">
+
+            <div th:if="${verificationResponse}">
+                <div th:if="${verificationResponse} == 'SUCCESS'" class="alert alert-success text-center">
+                    <h1>Congratulations!</h1>
+                    <span class="response-info h3">
+                        Your account was verified!
+                        100 credits have been added to your account.
+                    </span>
+                </div>
+                <div th:unless="${verificationResponse} == 'SUCCESS'" class="alert alert-danger text-center">
+                    <h4>There was an issue.</h4>
+                    <span class="response-info" th:text="${response}"></span>
+                </div>
+            </div>
+            <div th:if="${not_verified}" th:unless="${verificationResponse}" class="become-member">
+                <h1 class="fw-bolder">Check your inbox!</h1>
+
+                <div th:if="${verify}">
+                    <span class="h6 fw-bold">
+                        Please follow further instructions on email sent to [[${user.getEmail()}]]
+                    </span>
+                </div>
+                <div th:unless="${verify}">
+                    <span class="h5 fw-bold">
+                        Thank you for joining us [[${user.getFirstname()}]]!
+                        Verify your email now and claim your 100 FREE credits!
+                    </span>
+                    <br>
+                    <a class="h4 fw-bold" href="/verify">Send verification email.</a>
+                </div>
+            </div>
+
+        </div>
+
 
     </div>
 </body>

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import net.gamebacon.demo.games.util.WithDrawResponse;
 import net.gamebacon.demo.registration.RegistrationRequest;
 import net.gamebacon.demo.registration.exception.UsernameTakenException;
-import net.gamebacon.demo.registration.token.ConfirmationToken;
 import net.gamebacon.demo.registration.token.ConfirmationTokenService;
 import net.gamebacon.demo.user.NoSuchUserException;
 import org.springframework.security.core.Authentication;
@@ -66,7 +65,7 @@ public class LoginUserService implements UserDetailsService {
         loginUserRepository.save(loginUser);
     }
 
-    public String signUpUser(LoginUser loginUser) throws UsernameTakenException {
+    public void signUpUser(LoginUser loginUser) throws UsernameTakenException {
 
         if(isEmailPresent(loginUser.getEmail()))
             throw new UsernameTakenException(loginUser.getEmail());
@@ -76,16 +75,15 @@ public class LoginUserService implements UserDetailsService {
         loginUser.setPassword(encryptedPassword);
 
         loginUserRepository.save(loginUser);
-
-        ConfirmationToken confirmationToken = new ConfirmationToken(loginUser);
-
-        confirmationTokenService.saveConfirmationToken(confirmationToken);
-
-        return confirmationToken.getToken();
     }
 
-    public int enableLoginUser(String email) {
-        return loginUserRepository.enableLoginUser(email);
+    public int verifyUser(LoginUser loginUser) {
+
+        if(isVerified(loginUser.getId()))
+            throw new IllegalStateException("User with id " + loginUser.getId() + " is already verified!");
+
+        loginUserRepository.appendBalance(loginUser.getId(), 100);
+        return loginUserRepository.enableLoginUser(loginUser.getEmail());
     }
 
     public List<LoginUser> getUsers() {
@@ -131,5 +129,13 @@ public class LoginUserService implements UserDetailsService {
         }
 
         return new WithDrawResponse(false, balance);
+    }
+
+    public double getBalance(Long id) {
+        return loginUserRepository.getBalance(id);
+    }
+
+    public boolean isVerified(Long id) {
+        return loginUserRepository.getVerified(id);
     }
 }

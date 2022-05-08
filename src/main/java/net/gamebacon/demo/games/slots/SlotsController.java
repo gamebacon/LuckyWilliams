@@ -19,16 +19,11 @@ public class SlotsController {
     @GetMapping("/games/slots")
     public String showSlots(Model model) {
 
-        //get from db instead.
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LoginUser user = ((LoginUser) auth.getPrincipal());
 
         if(!model.containsAttribute("result"))
-            model.addAttribute("result", new WithDrawResponse(false, user.getBalance()));
-
-        System.out.println(user.getBalance());
-
-        System.out.println(model.containsAttribute("result"));
+            model.addAttribute("result", new WithDrawResponse(false, slotsService.getBalance(user.getId())));
 
         return "games/slots";
     }
