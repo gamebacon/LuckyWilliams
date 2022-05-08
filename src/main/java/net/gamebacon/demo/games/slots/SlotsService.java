@@ -1,26 +1,36 @@
 package net.gamebacon.demo.games.slots;
 
-import net.gamebacon.demo.games.Util;
+import lombok.AllArgsConstructor;
+import net.gamebacon.demo.games.util.Util;
+import net.gamebacon.demo.games.util.WithDrawResponse;
+import net.gamebacon.demo.login_user.LoginUserService;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
 @Service
+@AllArgsConstructor
 public class SlotsService {
 
+    private LoginUserService userService;
 
-    public SlotsSessionResults spin()  {
+    public SlotsSessionResults spin(int bet) {
+
+        WithDrawResponse withDrawlResponse = userService.withDrawUser(bet);
+
+        if(!withDrawlResponse.isSuccessful()) {
+            return new SlotsSessionResults(withDrawlResponse, 0, null);
+        }
+
         int[] wheelResult = getWheels();
         float winAmount = 0;
 
-        if(isWin(wheelResult))
+        if(isWin(wheelResult)) {
             winAmount = 10;
+            userService.depositUser(winAmount);
+        }
 
-        //set balance here
-
-        SlotsSessionResults result = new SlotsSessionResults(winAmount, wheelResult);
-
-        return result;
+        return new SlotsSessionResults(withDrawlResponse, winAmount, wheelResult);
     }
 
     private int[] getWheels() {

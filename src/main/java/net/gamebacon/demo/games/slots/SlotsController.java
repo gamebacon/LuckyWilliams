@@ -1,13 +1,14 @@
 package net.gamebacon.demo.games.slots;
 
+import net.gamebacon.demo.games.util.WithDrawResponse;
+import net.gamebacon.demo.login_user.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.Arrays;
 
 @Controller
 public class SlotsController {
@@ -18,23 +19,31 @@ public class SlotsController {
     @GetMapping("/games/slots")
     public String showSlots(Model model) {
 
+        //get from db instead.
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser user = ((LoginUser) auth.getPrincipal());
+
         if(!model.containsAttribute("result"))
-             model.addAttribute("result", new SlotsSessionResults(0, new int[]{-1, -1, -1}));
+            model.addAttribute("result", new WithDrawResponse(false, user.getBalance()));
+
+        System.out.println(user.getBalance());
+
+        System.out.println(model.containsAttribute("result"));
 
         return "games/slots";
     }
 
 
-    @GetMapping("/games/slots/spin")
-    public String spin(RedirectAttributes redirectAttributes) {
+    @PostMapping(value = "/games/slots/spin", produces = "application/json")
+    @ResponseBody
+    public SlotsSessionResults spin(RedirectAttributes re, @RequestParam int bet) {
 
-        //can afford?
+        SlotsSessionResults result = slotsService.spin(bet);
 
-        SlotsSessionResults result = slotsService.spin();
+        re.addFlashAttribute("result", result.getWithdrawResult());
 
-        redirectAttributes.addFlashAttribute("result", result);
+        return result;
 
-        return "redirect:/games/slots";
     }
 
 

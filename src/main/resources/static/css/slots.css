@@ -16,8 +16,6 @@
     background-color: white;
     width: 100%;
     margin: 20px auto;
-    border-radius: 30px;
-
 }
 
 .wheel-container > .wheel {
@@ -45,17 +43,50 @@
 .button-container {
     width: 100%;
     margin: auto;
-    background-color: #4f4f4f;
+    background-color: #ffa700;
 }
 
 .button-container > .spin-button {
     margin: 10px;
 }
 
+.slot-bet-section {
+    /*
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+     */
+}
+
+.slot-bet-section > input, .slot-balance-section > input, .slot-win-section > input {
+    width: 50px;
+    margin: auto;
+    height: 75%;
+    font-size: 25px;
+    text-align: center;
+}
+
+.slot-balance-section {
+
+}
+
+.slot-balance {
+
+}
+
+.slot-bet-section > label, .slot-balance-section > label, .slot-win-section > label {
+    font-size: 25px;
+}
+
+
 #slot-wheel-1, #slot-wheel-2, #slot-wheel-3 {
     height: 200px;
     background-size: cover;
+   /*
+
     background-clip: content-box;
+    */
+
     background-repeat: initial;
 
     flex: 1 0 0%;

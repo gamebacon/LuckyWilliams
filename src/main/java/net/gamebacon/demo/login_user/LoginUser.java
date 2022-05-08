@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.gamebacon.demo.user.Gender;
+import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -50,6 +51,9 @@ public class LoginUser implements UserDetails {
     @Column
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Column(nullable = false, columnDefinition = "Decimal(15,2)")
+    private double balance;
 
     @Column
     private boolean isExpired;

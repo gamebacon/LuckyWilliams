@@ -1,11 +1,14 @@
 package net.gamebacon.demo.login_user;
 
 import lombok.AllArgsConstructor;
+import net.gamebacon.demo.games.util.WithDrawResponse;
 import net.gamebacon.demo.registration.RegistrationRequest;
 import net.gamebacon.demo.registration.exception.UsernameTakenException;
 import net.gamebacon.demo.registration.token.ConfirmationToken;
 import net.gamebacon.demo.registration.token.ConfirmationTokenService;
 import net.gamebacon.demo.user.NoSuchUserException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -108,5 +111,25 @@ public class LoginUserService implements UserDetailsService {
 
     public void setPassword(Long id, String encodedPassword) {
         loginUserRepository.setPassword(id, encodedPassword);
+    }
+
+    public void depositUser(double deposit)  {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser user = ((LoginUser) auth.getPrincipal());
+        loginUserRepository.appendBalance(user.getId(), deposit);
+    }
+
+    public WithDrawResponse withDrawUser(double bet) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser user = ((LoginUser) auth.getPrincipal());
+
+        double balance = loginUserRepository.getBalance(user.getId());
+
+        if(balance >= bet) {
+            loginUserRepository.appendBalance(user.getId(), -bet);
+            return new WithDrawResponse(true, balance - bet );
+        }
+
+        return new WithDrawResponse(false, balance);
     }
 }

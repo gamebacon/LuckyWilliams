@@ -26,4 +26,17 @@ public interface LoginUserRepository extends JpaRepository<LoginUser, Long> {
     @Modifying
     @Query("UPDATE LoginUser l SET l.password = ?2 WHERE l.id = ?1")
     void setPassword(Long id, String encodedPassword);
+
+
+
+    @Query(value = "SELECT balance FROM login_user l WHERE l.id = ?1", nativeQuery = true)
+    double getBalance(Long id);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE LoginUser u SET u.balance = (u.balance + ?2) WHERE u.id = ?1")
+    void appendBalance(Long id, double append);
+
+
+
 }
