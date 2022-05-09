@@ -14,7 +14,14 @@ public class SlotsService {
 
     private LoginUserService userService;
 
+    private static final int MIN_BET = 1;
+    private static final int MAX_BET = 3;
+
+
     public SlotsSessionResults spin(int bet) {
+
+        if(bet < MIN_BET || bet > MAX_BET)
+            throw new IllegalStateException("Invalid bet: " + bet);
 
         WithDrawResponse withDrawlResponse = userService.withDrawUser(bet);
 
@@ -26,7 +33,7 @@ public class SlotsService {
         float winAmount = 0;
 
         if(isWin(wheelResult)) {
-            winAmount = 10;
+            winAmount = getPayout(bet, wheelResult[0]);
             userService.depositUser(winAmount);
         }
 
@@ -37,11 +44,46 @@ public class SlotsService {
         int[] wheelResult = new int[3];
 
         for(int i = 0; i < 3; i++) {
-            wheelResult[i] = Util.randRange(0, 9);
+            wheelResult[i] = getWheel();
         }
 
         return wheelResult;
     }
+
+    private int getWheel() {
+        int result = -1;
+
+        float rand = (float) Math.random();
+
+        if(rand < .025) {
+            result = 0;
+        } else if( rand < .0525) {
+            result = 1;
+        } else if (rand < .1025) {
+            result = 2;
+        } else if (rand < .1525) {
+            result = 3;
+        } else {
+            result = Util.randRange(4, 8);
+        }
+
+        System.out.println(String.format("Rand: %.1f - Num: %d", rand, result));
+
+        return result;
+    }
+
+    private int getPayout(int bet, int result) {
+
+        switch (result) {
+            case 0: return 400 * bet;
+            case 1: return 125 * bet;
+            case 2: return 75 * bet;
+            case 3: return 45 * bet;
+            default: return 5 * bet;
+        }
+
+    }
+
 
     private boolean isWin(int[] wheel) {
 
@@ -49,7 +91,6 @@ public class SlotsService {
         int len = wheel.length;
 
         for(int i = 0; i < len; i++) {
-
             if((i < len - 1) && wheel[i] != wheel[i + 1]) {
                 win = false;
             }
@@ -61,4 +102,7 @@ public class SlotsService {
     }
 
 
+    public double getBalance(Long id) {
+        return userService.getBalance(id);
+    }
 }

@@ -6,6 +6,7 @@ import net.gamebacon.demo.login_user.Role;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
@@ -32,7 +33,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/register/**", "/login", "/forgot-password/**", "/forgot-password-reset/**").anonymous() //Only anonymous can login/register
                 .antMatchers("/", "/terms").permitAll() //everyone can see home page & essentials
-                .antMatchers("/games/**").authenticated() //only authenticated can play games
+                .antMatchers("/games/**", "/verify").authenticated() //only authenticated can play games
                 .antMatchers("/images/**", "/js/**", "/css/**", "/other/**", "/sound/**").permitAll() //all need access to statis files
                 .antMatchers("/users/**").hasAuthority(Role.ADMIN.name()) // only admin can manage users
                 .anyRequest().authenticated()
@@ -49,6 +50,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
+    }
+
+
+    @Bean
+    public AuthenticationManager authManager() throws Exception {
+        return this.authenticationManager();
     }
 
 
