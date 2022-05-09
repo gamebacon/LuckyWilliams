@@ -15,7 +15,7 @@ public class SlotsService {
     private LoginUserService userService;
 
     private static final int MIN_BET = 1;
-    private static final int MAX_BET = 3;
+    private static final int MAX_BET = 5;
 
 
     public SlotsSessionResults spin(int bet) {
@@ -59,9 +59,9 @@ public class SlotsService {
             result = 0;
         } else if( rand < .0525) {
             result = 1;
-        } else if (rand < .1025) {
-            result = 2;
         } else if (rand < .1525) {
+            result = 2;
+        } else if (rand < .3525) {
             result = 3;
         } else {
             result = Util.randRange(4, 8);
@@ -77,8 +77,8 @@ public class SlotsService {
         switch (result) {
             case 0: return 400 * bet;
             case 1: return 125 * bet;
-            case 2: return 75 * bet;
-            case 3: return 45 * bet;
+            case 2: return 65 * bet;
+            case 3: return 15 * bet;
             default: return 5 * bet;
         }
 

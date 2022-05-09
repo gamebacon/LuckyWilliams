@@ -7,10 +7,12 @@ const WHEEL_ELEMENTS = [
 
 //firefox block audio?
 const coinSound = new Audio("/sound/coin.mp3");
-coinSound.volume = .20
+coinSound.volume = .1
 
-const loseSound = new Audio("/sound/spin.mp3");
-const winSound = new Audio("/sound/spin.mp3");
+const loseSound = new Audio("/sound/lose.mp3");
+loseSound.volume = .20
+
+const winSound = new Audio("/sound/win.mp3");
 
 const intervals = [WHEEL_ELEMENTS.length]
 
@@ -21,6 +23,10 @@ let isSpinning = false;
 
 const spinButton = $('#slots-spin');
 const betInput = $('#bet-input');
+const fastMode = $('#fast-mode-button');
+
+const useSound = $('#slot-sound-button');
+useSound.prop('checked', true)
 
 const balanceLabel = $('#slot-balance')
 const winLabel = $('#slot-win-text')
@@ -51,7 +57,7 @@ function requestSpin() {
             data: input,
             dataType: 'json',
             success: function (result) {
-                console.log(JSON.stringify(result));
+                //console.log(JSON.stringify(result));
                 validateRequest(result)
             },
             error: function (err) {
@@ -67,6 +73,7 @@ function validateRequest(result) {
     if(successful) {
         balanceLabel.val(balanceLeft)
         _winAmount = winAmount;
+        winLabel.val("0")
         spin(result)
     } else {
         alert("Not enough funds!!")
@@ -84,6 +91,7 @@ function spin(result) {
 
     spinButton.prop("disabled", true)
     betInput.prop("disabled", true)
+    fastMode.prop("disabled", true)
 
 
     totalSpins = [0, 0, 0]
@@ -95,8 +103,9 @@ function spin(result) {
 }
 
 function startIntervalls(wheelIndex) {
-    const maxSpin = 10;
-    intervals[wheelIndex] = setInterval(spinOnce, 200, wheelIndex, maxSpin);
+
+    const maxSpin = fastMode.prop('checked') ? 0 : 8;
+    intervals[wheelIndex] = setInterval(spinOnce, fastMode.prop('checked') ? 120 : 200, wheelIndex, maxSpin);
 }
 
 function spinOnce(wheelIndex, maxSpin) {
@@ -104,12 +113,14 @@ function spinOnce(wheelIndex, maxSpin) {
     let wheel = WHEEL_ELEMENTS[wheelIndex];
 
     if(wheelIndex === 2)
-        playSoundAsync("/sound/spin.mp3")
+        playSoundAsync("/sound/spin.mp3", .2)
 
-    if(totalSpins[wheelIndex] >= maxSpin + (wheelIndex + 1) * 5) {
+    if(totalSpins[wheelIndex] >= maxSpin + (wheelIndex + 1) * (fastMode.prop('checked') ? 1 : 5)) {
         num = wheelResults[wheelIndex]
         clearInterval(intervals[wheelIndex])
-        coinSound.play();
+
+        if(!fastMode.prop('checked'))
+            playSoundAsync("/sound/coin.mp3", .1)
 
         if(wheelIndex === 2) {
             finish()
@@ -122,20 +133,39 @@ function spinOnce(wheelIndex, maxSpin) {
 }
 
 function finish() {
-    isSpinning = false;
 
-    if(_winAmount > 0)
+    if(_winAmount > 0) {
         winLabel.val(_winAmount)
-
+        playSoundAsync("/sound/win.mp3")
+    } else if (!fastMode.prop('checked')){
+        playSoundAsync("/sound/lose.mp3", .1)
+    }
 
     _winAmount = 0;
+
     spinButton.prop("disabled", false)
     betInput.prop("disabled", false)
+    fastMode.prop("disabled", false)
+
+    isSpinning = false;
 }
 
-function playSoundAsync(path) {
+$(window).on("beforeunload", function () {
+
+    if(!isSpinning)
+        return;
+
+    return "A game is in progress are you sure?";
+
+},);
+
+function playSoundAsync(path, volume = .3) {
+
+    if(!useSound.prop('checked'))
+        return;
+
     sound = new Audio(path)
-    sound.volume = .3
+    sound.volume = volume
     sound.play()
 }
 
