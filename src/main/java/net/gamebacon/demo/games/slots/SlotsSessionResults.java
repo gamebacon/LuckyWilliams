@@ -4,7 +4,7 @@ package net.gamebacon.demo.games.slots;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import net.gamebacon.demo.games.GameSessionResult;
+import net.gamebacon.demo.games.util.GameSessionResult;
 import net.gamebacon.demo.games.util.WithDrawResponse;
 
 @Setter

@@ -1,4 +1,4 @@
-package net.gamebacon.demo.games;
+package net.gamebacon.demo.games.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

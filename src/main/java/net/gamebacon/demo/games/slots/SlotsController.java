@@ -26,10 +26,6 @@ public class SlotsController {
         if(!model.containsAttribute("result"))
             model.addAttribute("result", new WithDrawResponse(false, user.getBalance()));
 
-        System.out.println(user.getBalance());
-
-        System.out.println(model.containsAttribute("result"));
-
         return "games/slots";
     }
 
