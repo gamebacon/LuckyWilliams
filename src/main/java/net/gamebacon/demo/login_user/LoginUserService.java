@@ -1,11 +1,15 @@
 package net.gamebacon.demo.login_user;
 
+import groovy.lang.Lazy;
 import lombok.AllArgsConstructor;
 import net.gamebacon.demo.games.util.WithDrawResponse;
 import net.gamebacon.demo.registration.RegistrationRequest;
 import net.gamebacon.demo.registration.exception.UsernameTakenException;
 import net.gamebacon.demo.registration.token.ConfirmationTokenService;
 import net.gamebacon.demo.user.NoSuchUserException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +18,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +29,7 @@ public class LoginUserService implements UserDetailsService {
 
     private LoginUserRepository loginUserRepository;
     private BCryptPasswordEncoder cryptPasswordEncoder;
-    private ConfirmationTokenService confirmationTokenService;
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -65,17 +71,22 @@ public class LoginUserService implements UserDetailsService {
         loginUserRepository.save(loginUser);
     }
 
-    public void signUpUser(LoginUser loginUser) throws UsernameTakenException {
+    public void signUpUser(LoginUser loginUser, HttpServletRequest servletRequest) throws UsernameTakenException {
 
         if(isEmailPresent(loginUser.getEmail()))
             throw new UsernameTakenException(loginUser.getEmail());
 
-        String encryptedPassword = cryptPasswordEncoder.encode(loginUser.getPassword());
+        String password = loginUser.getPassword();
+        String email = loginUser.getEmail();
+
+        String encryptedPassword = cryptPasswordEncoder.encode(password);
 
         loginUser.setPassword(encryptedPassword);
 
         loginUserRepository.save(loginUser);
     }
+
+
 
     public int verifyUser(LoginUser loginUser) {
 

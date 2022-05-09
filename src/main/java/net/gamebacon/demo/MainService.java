@@ -1,14 +1,23 @@
 package net.gamebacon.demo;
 
+import groovy.lang.Lazy;
 import lombok.AllArgsConstructor;
 import net.gamebacon.demo.email.EmailSender;
 import net.gamebacon.demo.login_user.LoginUser;
 import net.gamebacon.demo.login_user.LoginUserService;
+import net.gamebacon.demo.registration.RegistrationRequest;
 import net.gamebacon.demo.registration.token.ConfirmationToken;
 import net.gamebacon.demo.registration.token.ConfirmationTokenResponse;
 import net.gamebacon.demo.registration.token.ConfirmationTokenService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -17,6 +26,7 @@ import java.util.Optional;
 public class MainService {
 
 
+    private AuthenticationManager authenticationManager;
     private ConfirmationTokenService tokenService;
     private LoginUserService loginUserService;
     private EmailSender emailSender;
@@ -28,6 +38,18 @@ public class MainService {
         String message = buildEmail(loginUser, link);
         emailSender.send(loginUser.getEmail(), message);
     }
+
+
+    public void authenticateUser(RegistrationRequest userRequest) {
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userRequest.getEmail(), userRequest.getPassword());
+        Authentication authentication = authenticationManager.authenticate(authToken);
+
+        if(authentication.isAuthenticated())  {
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+    }
+
+
     public ConfirmationTokenResponse confirmToken(String tokenString) {
 
         Optional<ConfirmationToken> optional = tokenService.getToken(tokenString);

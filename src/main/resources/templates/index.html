@@ -23,7 +23,7 @@
         <div sec:authorize="isAuthenticated()">
 
             <div th:if="${verificationResponse}">
-                <div th:if="${verificationResponse} == 'SUCCESS'" class="alert alert-success text-center">
+                <div th:if="${verificationResponse} == 'SUCCESS'" class="rounded-3 border-5 w-50 m-auto alert alert-success text-center">
                     <h1>Congratulations!</h1>
                     <span class="response-info h3">
                         Your account was verified!
@@ -36,14 +36,15 @@
                 </div>
             </div>
             <div th:if="${not_verified}" th:unless="${verificationResponse}" class="become-member">
-                <h1 class="fw-bolder">Check your inbox!</h1>
 
                 <div th:if="${verify}">
+                    <h1 class="fw-bolder">Check your inbox!</h1>
                     <span class="h6 fw-bold">
                         Please follow further instructions on email sent to [[${user.getEmail()}]]
                     </span>
                 </div>
                 <div th:unless="${verify}">
+                    <h1 class="fw-bolder">Welcome [[${user.getFirstname()}]]!</h1>
                     <span class="h5 fw-bold">
                         Thank you for joining us [[${user.getFirstname()}]]!
                         Verify your email now and claim your 100 FREE credits!

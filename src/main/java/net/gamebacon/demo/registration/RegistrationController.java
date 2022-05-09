@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class RegistrationController {
 
@@ -36,14 +39,12 @@ public class RegistrationController {
     //cant add data to model attribute? but redirectAttribute.addFlashattribute works=??
 
     @PostMapping("/register/save")
-    public String saveUser(@ModelAttribute  RegistrationRequest loginUser, RedirectAttributes re) {
+    public String saveUser(@ModelAttribute  RegistrationRequest userRequest, RedirectAttributes re, HttpServletRequest servletRequest) {
 
 
         try {
-            registrationService.register(loginUser);
-
-            //re.addFlashAttribute("confirmEmail", loginUser.getEmail());
-            re.addFlashAttribute("success", true);
+            registrationService.register(userRequest, servletRequest);
+            re.addFlashAttribute("new_member", userRequest);
             return "redirect:/login";
         } catch (NotEligibleException notEligibleException) {
             re.addFlashAttribute("error", "You must confirm that you're 18 years old or older.");
@@ -52,25 +53,20 @@ public class RegistrationController {
         } catch (PasswordsNotMatchingException e) {
             re.addFlashAttribute("error", "The passwords do not match.");
         } catch (InvalidUsernameException e) {
-            loginUser.setEmail("");
+            userRequest.setEmail("");
             re.addFlashAttribute("error", "The email is invalid");
         } catch (UsernameTakenException e) {
-            loginUser.setEmail("");
+            userRequest.setEmail("");
             re.addFlashAttribute("error", "The email is already being used.");
         }
+
         //add present fields before redirect
-        re.addFlashAttribute("loginUser", loginUser);
+        re.addFlashAttribute("loginUser", userRequest);
 
         return "redirect:/register";
     }
 
 
 
-
-    @GetMapping("/login")
-    public String login(@RequestParam(name = "error", defaultValue = "false") boolean isError, Model model) {
-        model.addAttribute("error", isError);
-        return "account/login";
-    }
 
 }
