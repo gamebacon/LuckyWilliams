@@ -2,12 +2,30 @@
 <html lang="en" xmlns:th=”http://www.thymeleaf.org” xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="shared/_layout">
 
 <head>
+    <link rel="stylesheet" href="/css/roulette.css">
     <title>Roulette</title>
 </head>
 
 <body>
 <div layout:fragment="content">
     <h1>Roulette</h1>
+    <div>
+        <div class="mb-5">
+            <img src="/images/wheel.png" id="roulette-wheel">
+        </div>
+
+        <div class="bg-warning">
+            <input type="text" id="rol-in">
+            <button onclick="spinRoulette(360)">Spin 360</button>
+            <button onclick="spinRoulette(9.73)">Spin 1/37</button>
+            <button onclick="spinRoulette(-1)">Rand</button>
+            <button onclick="resetRoulette()">Reset</button>
+        </div>
+    </div>
+
+
+    <script src="/js/roulette.js"> </script>
+
 </div>
 </body>
 </html>
