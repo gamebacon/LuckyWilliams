@@ -36,9 +36,15 @@
                         <a class="nav-link" href="/">Home</a>
                     </li>
 
-                    <li class="nav-item active px-3" sec:authorize="hasAuthority('ADMIN')">
-                        <a class="nav-link" href="/users">Users</a>
-                    </li>
+                    <div sec:authorize="hasAuthority('ADMIN')" class="dropdown px-3">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="adminDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="/users">Users</a>
+                            <a class="dropdown-item" href="/todo">Todo</a>
+                        </div>
+                    </div>
 
                     <div class="dropdown px-3">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

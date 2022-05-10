@@ -18,6 +18,14 @@
     margin: 20px auto;
 }
 
+.wheel-container2 {
+
+}
+
+.wheel-container2 > .wheel2 {
+
+}
+
 .wheel-container > .wheel {
     display: flex;
     align-content: center;
@@ -46,9 +54,6 @@
     background-color: darkturquoise;
 }
 
-.button-container > .spin-button {
-    margin: 10px;
-}
 
 .slot-bet-section > input, .slot-balance-section > input, .slot-win-section > input {
     /*
@@ -67,6 +72,9 @@
 
 
 #slot-wheel-1, #slot-wheel-2, #slot-wheel-3 {
+    display: block;
+}
+/*
     height: 200px;
     background-size: cover;
     background-repeat: initial;
@@ -74,21 +82,24 @@
     flex-grow: 1;
     flex-shrink: 0;
     flex-basis: 0%;
-}
+ */
 
 
 .game-button {
-    background: blueviolet;
-    padding: 1px 9px 9px 9px;
+    background: #dc3545;
+    padding: 1px 5px 5px 5px;
     border: 3px solid gold;
     border-radius: 15px;
-    width: 67%;
+    height: 100%;
+    width: 100%;
+    align-content: center;
 }
-.game-button-label {
+.game-button > label {
     margin: 0;
     font-weight: bolder;
     color: gold;
     font-size: 100%;
+    text-transform: uppercase;
 }
 .game-button-input {
     background: #202020;

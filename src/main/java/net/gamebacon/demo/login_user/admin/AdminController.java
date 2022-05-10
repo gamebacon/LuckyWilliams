@@ -29,6 +29,11 @@ public class AdminController {
         return "admin/users";
     }
 
+    @GetMapping("/todo")
+    public String showTodoList(Model model) {
+        return "admin/todo";
+    }
+
     @GetMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 

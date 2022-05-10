@@ -12,9 +12,16 @@
         <h1 class="fw-bolder h1">Slots</h1>
             <div class="m-auto text-center">
 
+                <div class="button-container row">
+                    <div class="col">
+                        <div class="slot-balance-section game-button">
+                            <label class="game-button-label" for="slot-balance">Balance</label>
+                            <input class="game-button-input" id="slot-balance" name="balance" readonly th:if="${result}" th:value="${result.balanceLeft}">
+                        </div>
+                    </div>
+                </div>
 
-
-                <div class="row wheel-container">
+                <div class="row wheel-container2">
                     <div id="slot-wheel-1"></div>
                     <div id="slot-wheel-2"></div>
                     <div id="slot-wheel-3"></div>
@@ -24,35 +31,29 @@
                     <div class="row m-auto">
                         <div class="col">
                             <div class="slot-bet-section game-button">
-                                <label class="game-button-label" for="bet-input">Bet: </label>
+                                <label class="game-button-label" for="bet-input">Bet</label>
                                 <input class="game-button-input" id="bet-input" type="number" name="bet" min="1" max="5" value="1">
                             </div>
                         </div>
                         <div class="col">
-                            <div class="slot-balance-section game-button">
-                                <label class="game-button-label" for="slot-balance">Balance: </label>
-                                <input class="game-button-input" id="slot-balance" name="balance" readonly th:if="${result}" th:value="${result.balanceLeft}">
-                            </div>
-                        </div>
-                        <div class="col">
                             <div class="slot-win-section game-button">
-                                <label class="game-button-label" for="slot-win-text">Win: </label>
+                                <label class="game-button-label" for="slot-win-text">Win</label>
                                 <input class="game-button-input" id="slot-win-text" name="win" readonly>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col">
-                            <button onclick="requestSpin()" type="button" id="slots-spin" class="slot-button spin-button btn-danger btn-lg">Spin</button>
+                            <button onclick="requestSpin()" type="button" id="slots-spin" class="game-button">
+                                <label class="game-button-label" for="slots-spin">SPIN</label>
+                            </button>
                         </div>
                         <div class="col">
-                            <div class="form-check form-switch slot-fast-mode slot-button">
+                            <div class="form-check form-switch slot-fast-mode game-button">
                                 <label class="form-check-label fw-bold" for="fast-mode-button">Fast mode</label>
                                 <input class="form-check-input m-auto" type="checkbox" role="switch" id="fast-mode-button">
                             </div>
                         </div>
                         <div class="col">
-                            <div class="form-check form-switch slot-sound-button slot-button">
+                            <div class="form-check form-switch slot-sound-button game-button">
                                 <label class="form-check-label fw-bold" for="slot-sound-button">Sound</label>
                                 <input class="form-check-input m-auto" type="checkbox" role="switch" id="slot-sound-button">
                             </div>

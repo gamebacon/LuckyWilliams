@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th=”http://www.thymeleaf.org” xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="shared/_layout">
+
+<body>
+<div layout:fragment="content">
+    <div class="text-center alert alert-secondary border-5 m-auto w-50">
+        <h1>Todos!</h1>
+        <div>
+            <table class="table table-striped text-left">
+                <th>Todo</th>
+                <tr>
+                    <input type="checkbox" class="checkbox" >
+                    <label class="checkbox-label" >Take out the trash</label>
+                </tr>
+                <tr>
+                    <input type="checkbox" class="checkbox" >
+                    <label class="checkbox-label" >Do the dishes</label>
+                </tr>
+                <tr>
+                    <input type="checkbox" class="checkbox" >
+                    <label class="checkbox-label" >Feed the child</label>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
