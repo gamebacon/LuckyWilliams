@@ -2,10 +2,11 @@ package net.gamebacon.demo.login_user.admin;
 
 import net.gamebacon.demo.login_user.LoginUser;
 import net.gamebacon.demo.login_user.LoginUserService;
-import net.gamebacon.demo.registration.RegistrationRequest;
 import net.gamebacon.demo.registration.exception.UsernameTakenException;
-import net.gamebacon.demo.user.NoSuchUserException;
+import net.gamebacon.demo.login_user.NoSuchUserException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +23,19 @@ public class AdminController {
     LoginUserService loginUserService;
 
 
-    @GetMapping("/users")
+    @GetMapping("/admin/users")
     public String showUserList(Model model) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<LoginUser> users = loginUserService.getUsers();
+
+        //avoid nasty bug
+        LoginUser me =  ((LoginUser) auth.getPrincipal());
+        users.remove(me);
+
         model.addAttribute("listUsers", users);
         return "admin/users";
+
     }
 
     @GetMapping("/todo")
@@ -34,7 +43,7 @@ public class AdminController {
         return "admin/todo";
     }
 
-    @GetMapping("/users/delete/{id}")
+    @GetMapping("/admin/users/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 
         try {
@@ -44,20 +53,20 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("message", "No such user.");
         }
 
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
 
-    @GetMapping("users/new")
+    @GetMapping("admin/users/new")
     public String createNewUser(Model model) {
-        model.addAttribute("user", new RegistrationRequest());
+        model.addAttribute("user", new LoginUser());
         model.addAttribute("title", "New user");
         return "admin/new_user";
     }
 
 
-    @PostMapping("/users/save")
-    public String newUser(RegistrationRequest user, RedirectAttributes redirectAttributes) {
+    @PostMapping("admin/users/save")
+    public String newUser(LoginUser user, RedirectAttributes redirectAttributes) {
 
         try {
             loginUserService.addUser(user);
@@ -66,31 +75,21 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("message", "Username taken.");
         }
 
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
-    @GetMapping("/users/edit/{id}")
+    @GetMapping("/admin/users/edit/{id}")
     public String editUser(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
             LoginUser user = loginUserService.getUser(id);
-
-            RegistrationRequest regRequest = new RegistrationRequest();
-            regRequest.setEmail(user.getEmail());
-            regRequest.setUsername(user.getUsername());
-            regRequest.setPassword(user.getPassword());
-            regRequest.setRepeatPassword(user.getPassword());
-            regRequest.setGender(user.getGender());
-            regRequest.setId(user.getId());
-            regRequest.setEnabled(user.isEnabled());
-
-            model.addAttribute("user", regRequest);
+            model.addAttribute("user", user);
             model.addAttribute("title", "Edit user");
             return "admin/new_user";
         } catch (NoSuchUserException e) {
             redirectAttributes.addFlashAttribute("messgae", "No such user.");
         }
 
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
 }

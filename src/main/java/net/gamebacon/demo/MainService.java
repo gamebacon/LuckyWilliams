@@ -36,7 +36,7 @@ public class MainService {
         tokenService.saveConfirmationToken(confirmationToken);
         String link = String.format("http://localhost:8080/verify?token=%s", confirmationToken.getToken());
         String message = buildEmail(loginUser, link);
-        emailSender.send(loginUser.getEmail(), message);
+        emailSender.send(loginUser.getEmail(), "Email verification", message);
     }
 
 
@@ -90,7 +90,7 @@ public class MainService {
     }
 
 
-    public boolean isVerified(Long id) {
+    public Boolean isVerified(Long id) {
         return loginUserService.isVerified(id);
     }
 }

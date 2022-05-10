@@ -1,6 +1,7 @@
 package net.gamebacon.demo;
 
 import net.gamebacon.demo.login_user.LoginUser;
+import net.gamebacon.demo.login_user.LoginUserService;
 import net.gamebacon.demo.registration.RegistrationRequest;
 import net.gamebacon.demo.registration.token.ConfirmationTokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,6 @@ public class MainController {
 
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         boolean authenticated = !((auth) instanceof AnonymousAuthenticationToken);
 
         if(authenticated) {
@@ -91,5 +91,21 @@ public class MainController {
 
         return "account/login";
     }
+
+    @Autowired
+    private LoginUserService loginUserService;
+
+
+    @GetMapping("/account")
+    private String viewAccount(Model model) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        LoginUser loginUser = ((LoginUser) auth.getPrincipal());
+        model.addAttribute("user", loginUser);
+
+        return "/account/account";
+    }
+
 
 }

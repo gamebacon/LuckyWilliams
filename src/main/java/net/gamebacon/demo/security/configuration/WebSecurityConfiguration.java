@@ -35,7 +35,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/terms").permitAll() //everyone can see home page & essentials
                 .antMatchers("/games/**", "/verify").authenticated() //only authenticated can play games
                 .antMatchers("/images/**", "/js/**", "/css/**", "/other/**", "/sound/**").permitAll() //all need access to statis files
-                .antMatchers("/users/**").hasAuthority(Role.ADMIN.name()) // only admin can manage users
+                .antMatchers("/admin/**").hasAuthority(Role.ADMIN.name()) // only admin can manage users
                 .anyRequest().authenticated()
                 .and().exceptionHandling().accessDeniedPage("/access-denied")
                 .and().formLogin(form -> {

@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th=”http://www.thymeleaf.org” xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="shared/_layout">
+
+<head>
+    <title>Manage user</title>
+</head>
+
 <body>
 <div layout:fragment="content">
     <div class="container p-lg-5">
@@ -7,7 +12,7 @@
             <h3 class="text-center fw-bold" th:text="${title}"></h3>
         </div>
         <div class="form-container" style="width: 500px;">
-            <form class="" method="post" th:action="@{/users/save}" th:object="${user}">
+            <form class="" method="post" th:action="@{/admin/users/save}" th:object="${user}">
 
                 <div class="text-center alert alert-danger mx-auto mb-4" th:if="${error}">
                     <h6>There was an issue.</h6>
@@ -33,10 +38,12 @@
                         <input  class="form-control" th:value="*{password}" type="text" th:field="*{password}" minlength="5" required>
                     </div>
 
+                    <!--
                     <div class="col form-col">
                         <label class="form-label">Confirm password</label>
                         <input  class="form-control" th:value="*{repeatPassword}" type="text" th:field="*{repeatPassword}" minlength="5" required>
                     </div>
+                    -->
 
                 </div>
 

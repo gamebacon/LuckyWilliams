@@ -18,14 +18,14 @@ public class EmailService implements EmailSender {
     private final JavaMailSender mailSender;
 
     @Override
-    public void send(String targetEmail, String content) {
+    public void send(String targetEmail, String subject, String content) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
-            helper.setFrom("baconandminecraft@gmail.com");
+            helper.setFrom("luckywilliams@gmail.com");
             helper.addTo(targetEmail);
-            helper.setSubject("Confirm email");
+            helper.setSubject(subject);
             helper.setText(content, true);
 
             mailSender.send(mimeMessage);

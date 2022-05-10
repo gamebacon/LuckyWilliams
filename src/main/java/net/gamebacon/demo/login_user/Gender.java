@@ -1,4 +1,4 @@
-package net.gamebacon.demo.user;
+package net.gamebacon.demo.login_user;
 
 public enum Gender {
     NA,

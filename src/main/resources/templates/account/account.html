@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th=”http://www.thymeleaf.org” xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="shared/_layout">
 
+<head>
+    <title>My account</title>
+</head>
+
 <body>
     <div layout:fragment="content">
-        <div class="text-center alert-success alert-success">
-            <h1>
-                Welcome <span th:text="${#authentication.getPrincipal().getUsername()}"></span>!
-                This is your account.
-            </h1>
+        <div class="bg-white ">
+            <div class="p-lg-5 bg-light rounded-3">
+                <h1 class="h1 fw-bolder">My account</h1>
+                <hr>
+                <div class="text-center">
+
+                    <div class="row">
+                        <div class="">
+                            <label>Firstname: <span th:text="${user.getFirstname()}"></span></label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="">
+                            <label>Firstname: Conrad</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </body>

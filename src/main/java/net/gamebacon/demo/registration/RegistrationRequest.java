@@ -2,7 +2,7 @@ package net.gamebacon.demo.registration;
 
 import lombok.*;
 import net.gamebacon.demo.login_user.Role;
-import net.gamebacon.demo.user.Gender;
+import net.gamebacon.demo.login_user.Gender;
 
 @Getter
 @Setter

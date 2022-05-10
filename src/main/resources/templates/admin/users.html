@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th=”http://www.thymeleaf.org” xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="shared/_layout">
+
+<head>
+    <title>Users</title>
+</head>
+
 <body>
 <div layout:fragment="content">
-    <div class="p-lg-5 rounded-1">
+    <div class="bg-white p-lg-5 rounded-1">
+
         <div class="row" th:if="@{message}">
             <span class="text-center alert">[[${message}]]</span>
         </div>
+
+
         <table class="table table-striped">
             <tr>
                 <th class="h3 fw-bolder">Users</th>
@@ -13,7 +21,10 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td><a href="/users/new" class="btn btn-primary">New User</a></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a href="/admin/users/new" class="btn btn-primary">New User</a></td>
             </tr>
             <tr>
                 <th>Id</th>
@@ -36,8 +47,8 @@
                         <td>[[${user.enabled}]]</td>
                         <td>[[${user.role}]]</td>
                         <td>[[${user.gender}]]</td>
-                        <td><a class="btn btn-secondary" th:href="@{'/users/edit/' + ${user.id}}" >Edit</a></td>
-                        <td><a class="btn btn-danger" onclick="return confirm('Are you sure?')" th:href="@{'/users/delete/' + ${user.id}}" >Delete</a></td>
+                        <td><a class="btn btn-secondary" th:href="@{'/admin/users/edit/' + ${user.id}}" >Edit</a></td>
+                        <td><a class="btn btn-danger" onclick="return confirm('Are you sure?')" th:href="@{'/admin/users/delete/' + ${user.id}}" >Delete</a></td>
                     </tr>
                 </th:block>
         </table>

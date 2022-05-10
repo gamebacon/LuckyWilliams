@@ -19,7 +19,7 @@ const intervals = [WHEEL_ELEMENTS.length]
 let totalSpins = []
 let wheelResults = []
 let maxSpins = 0;
-let isSpinning = false;
+let busy = false;
 
 const spinButton = $('#slots-spin');
 const betInput = $('#bet-input');
@@ -33,19 +33,13 @@ const winLabel = $('#slot-win-text')
 let _winAmount = 0;
 
 
-init();
-
-function init() {
-    WHEEL_ELEMENTS.forEach(e => setIcon(e, rand(9)))
-}
-
-
 function requestSpin() {
 
-        if(isSpinning) {
-            return;
-        }
 
+    if(busy)
+        return;
+
+    busy = true;
 
     const input = {
             bet: betInput.val(),
@@ -77,6 +71,7 @@ function validateRequest(result) {
         spin(result)
     } else {
         alert("Not enough funds!!")
+        busy = false
     }
 }
 
@@ -86,8 +81,6 @@ function setIcon(element, num) {
 }
 
 function spin(result) {
-
-    isSpinning = true;
 
     spinButton.prop("disabled", true)
     betInput.prop("disabled", true)
@@ -147,12 +140,12 @@ function finish() {
     betInput.prop("disabled", false)
     fastMode.prop("disabled", false)
 
-    isSpinning = false;
+    busy = false;
 }
 
 $(window).on("beforeunload", function () {
 
-    if(!isSpinning)
+    if(!busy)
         return;
 
     return "A game is in progress are you sure?";

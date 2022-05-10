@@ -39,11 +39,11 @@ public class RegistrationController {
     //cant add data to model attribute? but redirectAttribute.addFlashattribute works=??
 
     @PostMapping("/register/save")
-    public String saveUser(@ModelAttribute  RegistrationRequest userRequest, RedirectAttributes re, HttpServletRequest servletRequest) {
+    public String saveUser(@ModelAttribute  RegistrationRequest userRequest, RedirectAttributes re) {
 
 
         try {
-            registrationService.register(userRequest, servletRequest);
+            registrationService.register(userRequest);
             re.addFlashAttribute("new_member", userRequest);
             return "redirect:/login";
         } catch (NotEligibleException notEligibleException) {

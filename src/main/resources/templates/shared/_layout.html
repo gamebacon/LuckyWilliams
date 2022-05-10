@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/css/shared.css">
     <link rel="stylesheet" href="/css/main.css">
 
+    <link rel="icon" type="image/x-icon" href="/images/logo.png">
+
     <link rel="shortcut icon" href="#">
 
 
@@ -23,11 +25,10 @@
 
 <body>
 <header>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light mb-3">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light p-0" id="navBar">
         <div class="container">
             <a href="/" class="navbar-brand h1 mb-0">
-                <img class="d-inline-block align-top" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" height="30" width="30">
-                <span class="companyName"></span>
+                <img class="d-inline-block align-top" src="/images/logo2.png">
             </a>
             <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                 <ul class="navbar-nav" sec:authorize="isAuthenticated()">
@@ -37,12 +38,12 @@
                     </li>
 
                     <div sec:authorize="hasAuthority('ADMIN')" class="dropdown px-3">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="adminDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       <button class="btn btn-secondary dropdown-toggle" type="button" id="adminDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Admin
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="/users">Users</a>
-                            <a class="dropdown-item" href="/todo">Todo</a>
+                            <a class="dropdown-item" href="/admin/users">Users</a>
+                            <!--<a class="dropdown-item" href="/todo">Todo</a>-->
                         </div>
                     </div>
 
@@ -61,6 +62,7 @@
             </div>
             <div sec:authorize="isAuthenticated()">
                 <a class="nav-item nav-link justify-content-end" href="/account">My account</a>
+                <!--<a href="/account" class="nav-item nav-link justify-content-end" th:text="${#authentication.getPrincipal().getUsername()}"></a>-->
             </div>
             <div sec:authorize="isAuthenticated()">
                 <a class="nav-item nav-link justify-content-end" href="/logout">Logout</a>
@@ -82,8 +84,9 @@
 
 <footer class="border-top footer text-muted">
     <div class="container">
-        &copy; <span class="year"></span> <span class="companyName"></span> All rights reserved.  <!-- <a asp-area="" asp-page="/Privacy">Privacy</a> -->
+        <img src="/images/logo.png" class="pb-3">
         <br>
+        &copy; <span class="year"></span> <span class="companyName"></span> All rights reserved.  <!-- <a asp-area="" asp-page="/Privacy">Privacy</a> -->
         <span><a href="/terms">Terms of service</a></span>
     </div>
 </footer>

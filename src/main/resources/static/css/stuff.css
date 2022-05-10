@@ -2,15 +2,6 @@
 
 
 
-.display-center {
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-
-
 .form-container {
     padding: 28px;
     background-color: white;

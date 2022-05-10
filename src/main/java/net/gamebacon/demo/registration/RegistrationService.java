@@ -25,7 +25,7 @@ public class RegistrationService {
 
 
 
-    public void register(RegistrationRequest request, HttpServletRequest servletRequest) throws InvalidUsernameException, UsernameTakenException, PasswordsNotMatchingException, NotAgreedToTermsAndConditions, NotEligibleException {
+    public void register(RegistrationRequest request) throws InvalidUsernameException, UsernameTakenException, PasswordsNotMatchingException, NotAgreedToTermsAndConditions, NotEligibleException {
 
         if(!request.getPassword().equals(request.getRepeatPassword()))
             throw new PasswordsNotMatchingException(request.getPassword());
@@ -44,7 +44,7 @@ public class RegistrationService {
             throw new InvalidUsernameException("Email not valid: " + request.getEmail());
 
         LoginUser loginUser = new LoginUser(request.getUsername(), request.getPassword(), request.getEmail(), Role.DEFAULT, request.getGender(), request.getFirstname(), request.getSurname());
-        loginUserService.signUpUser(loginUser, servletRequest);
+        loginUserService.signUpUser(loginUser);
     }
 
 

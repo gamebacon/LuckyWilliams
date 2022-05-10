@@ -1,6 +1,13 @@
 
 
 
+#navBar {
+
+}
+
+
+
+
 .terms {
     background: white;
     padding: 20px;
@@ -17,6 +24,21 @@
     padding: 15px;
     border-radius: 30px;
     border: 3px black solid;
+}
+
+
+.display-center {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    /*margin-top: 200px*/
+}
+
+.companyName {
+    text-transform: capitalize;
+    font-weight: bold;
+    /*color: darkgoldenrod;*/
 }
 
 .home-page {

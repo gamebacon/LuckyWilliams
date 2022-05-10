@@ -1,15 +1,8 @@
 package net.gamebacon.demo.login_user;
 
-import groovy.lang.Lazy;
 import lombok.AllArgsConstructor;
 import net.gamebacon.demo.games.util.WithDrawResponse;
-import net.gamebacon.demo.registration.RegistrationRequest;
 import net.gamebacon.demo.registration.exception.UsernameTakenException;
-import net.gamebacon.demo.registration.token.ConfirmationTokenService;
-import net.gamebacon.demo.user.NoSuchUserException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,8 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,16 +36,12 @@ public class LoginUserService implements UserDetailsService {
         return loginUserRepository.findByEmail(email).isPresent();
     }
 
-    public void addUser(RegistrationRequest request) throws UsernameTakenException {
+    public void addUser(LoginUser loginUser) throws UsernameTakenException {
 
-        boolean newUser = request.getId() == null;
+        boolean newUser = loginUser.getId() == null;
 
-        if(isEmailPresent(request.getEmail()) && newUser)
-            throw new UsernameTakenException(request.getEmail());
-
-        LoginUser loginUser = new LoginUser(request.getUsername(), request.getPassword(), request.getEmail(), request.getRole(), request.getGender(), request.getFirstname(), request.getSurname());
-
-        loginUser.setVerified(request.isEnabled());
+        if(isEmailPresent(loginUser.getEmail()) && newUser)
+            throw new UsernameTakenException(loginUser.getEmail());
 
         String encodedPassword = cryptPasswordEncoder.encode(loginUser.getPassword());
 
@@ -62,27 +49,23 @@ public class LoginUserService implements UserDetailsService {
             loginUser.setPassword(encodedPassword);
         else {
 
-            if(!loginUserRepository.getById(request.getId()).getPassword().equals(request.getPassword()))
+            if(!loginUserRepository.getById(loginUser.getId()).getPassword().equals(loginUser.getPassword()))
                 loginUser.setPassword(encodedPassword);
 
-            loginUserRepository.deleteById(request.getId());
+            loginUserRepository.deleteById(loginUser.getId());
         }
 
         loginUserRepository.save(loginUser);
     }
 
-    public void signUpUser(LoginUser loginUser, HttpServletRequest servletRequest) throws UsernameTakenException {
+    public void signUpUser(LoginUser loginUser) throws UsernameTakenException {
 
         if(isEmailPresent(loginUser.getEmail()))
             throw new UsernameTakenException(loginUser.getEmail());
 
-        String password = loginUser.getPassword();
-        String email = loginUser.getEmail();
-
-        String encryptedPassword = cryptPasswordEncoder.encode(password);
+        String encryptedPassword = cryptPasswordEncoder.encode(loginUser.getPassword());
 
         loginUser.setPassword(encryptedPassword);
-
         loginUserRepository.save(loginUser);
     }
 
@@ -147,6 +130,10 @@ public class LoginUserService implements UserDetailsService {
     }
 
     public boolean isVerified(Long id) {
-        return loginUserRepository.getVerified(id);
+        boolean verified = loginUserRepository.getVerified(id);
+
+        System.out.println("Verified: " + verified);
+
+        return verified;
     }
 }
