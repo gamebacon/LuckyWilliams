@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class WithDrawResponse {
+public class WithdrawResult {
 
     private final boolean successful;
     private final double balanceLeft;

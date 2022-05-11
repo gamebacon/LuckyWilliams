@@ -9,6 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public abstract class GameSessionResult {
 
-    private WithDrawResponse withdrawResult;
+    private WithdrawResult withdrawResult;
     private double winAmount;
 }

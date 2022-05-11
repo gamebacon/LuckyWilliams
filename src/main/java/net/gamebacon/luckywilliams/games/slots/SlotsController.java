@@ -1,6 +1,6 @@
 package net.gamebacon.luckywilliams.games.slots;
 
-import net.gamebacon.luckywilliams.games.util.WithDrawResponse;
+import net.gamebacon.luckywilliams.games.util.WithdrawResult;
 import net.gamebacon.luckywilliams.login_user.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -23,7 +23,7 @@ public class SlotsController {
         LoginUser user = ((LoginUser) auth.getPrincipal());
 
         if(!model.containsAttribute("result"))
-            model.addAttribute("result", new WithDrawResponse(false, slotsService.getBalance(user.getId())));
+            model.addAttribute("result", new WithdrawResult(false, slotsService.getBalance(user.getId())));
 
         return "games/slots";
 

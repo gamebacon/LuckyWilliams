@@ -1,9 +1,13 @@
 package net.gamebacon.luckywilliams.games.videopoker.util;
 
-public class Card implements Comparable<Card> {
+import javax.persistence.Transient;
+import java.io.Serializable;
+
+public class Card implements Comparable<Card>, Serializable {
 
     private final int suit;
     private final int value;
+
     public boolean keep;
 
     public Card(int suitValue, int value) {

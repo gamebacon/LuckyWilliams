@@ -2,7 +2,7 @@ package net.gamebacon.luckywilliams.games.slots;
 
 import lombok.AllArgsConstructor;
 import net.gamebacon.luckywilliams.games.util.Util;
-import net.gamebacon.luckywilliams.games.util.WithDrawResponse;
+import net.gamebacon.luckywilliams.games.util.WithdrawResult;
 import net.gamebacon.luckywilliams.login_user.LoginUserService;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class SlotsService {
         if(bet < MIN_BET || bet > MAX_BET)
             throw new IllegalStateException("Invalid bet: " + bet);
 
-        WithDrawResponse withDrawlResponse = userService.withDrawUser(bet);
+        WithdrawResult withDrawlResponse = userService.withDrawUser(bet);
 
         if(!withDrawlResponse.isSuccessful()) {
             return new SlotsSessionResults(withDrawlResponse, 0, null);

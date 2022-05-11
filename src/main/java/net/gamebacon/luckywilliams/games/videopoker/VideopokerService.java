@@ -1,13 +1,15 @@
 package net.gamebacon.luckywilliams.games.videopoker;
 
 import lombok.AllArgsConstructor;
-import net.gamebacon.luckywilliams.games.util.WithDrawResponse;
+import net.gamebacon.luckywilliams.games.util.WithdrawResult;
 import net.gamebacon.luckywilliams.games.videopoker.util.Card;
 import net.gamebacon.luckywilliams.games.videopoker.util.Deck;
 import net.gamebacon.luckywilliams.login_user.LoginUserService;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -23,35 +25,54 @@ public class VideopokerService {
 
     public VideoPokerSession newGame(VideoPokerSession session) {
 
+        //control bet
         if(session.getBet() > MAX_BET || session.getBet() < MIN_BET)
             throw new IllegalStateException("Bad bet: " + session.getBet());
 
-        WithDrawResponse withDrawlResponse = userService.withDrawUser(session.getBet());
+        //Withdraw money
+        WithdrawResult withdrawResult = userService.withDrawUser(session.getBet());
+        session.setWithdrawResult(withdrawResult);
 
-        if(!withDrawlResponse.isSuccessful()) {
-            session.setWithDrawResponse(withDrawlResponse);
+        if(!withdrawResult.isSuccessful()) {
             return session;
         }
 
+        //init cards
         Deck deck = new Deck();
-
         deck.shuffle();
         Card[] cards = deck.draw(5);
 
+        //add session to db
+        session.setSessionId(UUID.randomUUID().toString());
         session.setCards(cards);
         session.setBet(session.getBet());
-        session.setLoginUser(userService.getUser());
+        session.setUserId(userService.getUser().getId());
         videoPokerRepository.save(session);
-
-        System.out.println("Draw: " + Arrays.toString(cards));
 
 
         return session;
     }
 
-    public VideoPokerSession finishTurn(VideoPokerSession results)  {
-        System.out.println("Finish!!");
-        return null;
+    public VideoPokerSession finishTurn(VideoPokerSession session)  {
+
+        Deck deck = new Deck();
+        deck.shuffle();
+
+        for(Card card : session.getCards()) {
+            deck.remove(card);
+        }
+
+        for(int i = 0; i < 5; i++) {
+            if(!session.getCards()[i].keep)
+                session.getCards()[i] = deck.draw();
+        }
+
+        //validate result...
+        //payout...
+
+        videoPokerRepository.deleteById(session.getId());
+
+        return session;
     }
 
 
@@ -61,14 +82,19 @@ public class VideopokerService {
 
     public VideoPokerSession validateSession(VideoPokerSession session) {
 
-        VideoPokerSession isPresent = videoPokerRepository.getById(session.getSessionId());
+        Long userId = userService.getUser().getId();
+        Optional<VideoPokerSession> optional = videoPokerRepository.findByUserId(userId);
 
-        System.out.println(isPresent.toString());
+        if(optional.isPresent()) {
+            VideoPokerSession ogSession = optional.get();
 
-        if(isPresent == null) {
-            return newGame(session);
+            for(int i = 0; i < session.getCards().length; i++) {
+                ogSession.getCards()[i].keep = session.getCards()[i].keep;
+            }
+
+            return finishTurn(ogSession);
         } else {
-            return finishTurn(session);
+            return newGame(session);
         }
     }
 }

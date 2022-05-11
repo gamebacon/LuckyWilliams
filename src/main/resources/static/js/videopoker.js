@@ -56,21 +56,16 @@ function finishGame() {
         dataType: 'json',
         success: function (result) {
 
-            console.log(JSON.stringify(result))
-
-            console.log("SUCCESS BACK: " + result)
-            //validateRequest(result)
-
+            console.log("Finish: " + JSON.stringify(result))
+            draw(result, true)
         },
         error: function (err) {
-
             console.log("Error :(((((((((((((((( : " + err)
+            busy = false;
+            results = null;
         }
     })
-    console.log(JSON.stringify(results))
 
-    results = null;
-    busy = false;
 }
 
 function requestNewGame() {
@@ -94,7 +89,7 @@ const session = {
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         success: function (result) {
-            console.log(JSON.stringify(result))
+            console.log("New: " + JSON.stringify(result))
             validateRequest(result)
         },
         error: function (err) {
@@ -107,29 +102,37 @@ const session = {
 
 function validateRequest(result) {
     const {withdrawResult, sessionId, winAmount, cards} = result
+
+
+
     const {successful, balanceLeft} = withdrawResult;
 
     if(successful) {
-        draw(result)
+        resetCards(true)
+        setTimeout( function(){ draw(result, false) }, 0)
     }  else {
         busy = false;
     }
 
 }
 
-function draw(result) {
-    busy = false;
+function draw(result, reset) {
     results = result;
 
-    const cards = result['cards'];
+    const cards = results['cards'];
+
+    resetCards(false)
 
     for(let i = 0; i < 5; i++) {
-        setTimeout( function(){
-            displayCard(cards[i], i) },
-           100 * i
-        )
+        if(!cards[i].keep)
+            setTimeout( function(){ displayCard(cards[i], i) }, 150 * i + 1000)
+
     }
 
+    busy = false;
+
+    if(reset)
+        results = null;
 }
 
 function displayCard(card, pos) {
@@ -137,6 +140,20 @@ function displayCard(card, pos) {
     const value = card['value'];
     cardElements[pos].className = suit + (value + 2);
     playSoundAsync("/sound/deal3.wav")
+}
+
+
+
+function resetCards(hardReset) {
+    for(let i = 0; i < 5; i++) {
+
+        if(!hardReset && cardSelectors[i].checked)
+            continue;
+
+        if(hardReset)
+            cardSelectors[i].checked = false;
+        cardElements[i].className = "back";
+    }
 }
 
 

@@ -1,7 +1,7 @@
 package net.gamebacon.luckywilliams.login_user;
 
 import lombok.AllArgsConstructor;
-import net.gamebacon.luckywilliams.games.util.WithDrawResponse;
+import net.gamebacon.luckywilliams.games.util.WithdrawResult;
 import net.gamebacon.luckywilliams.registration.exception.UsernameTakenException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -116,17 +116,17 @@ public class LoginUserService implements UserDetailsService {
         return ((LoginUser) auth.getPrincipal());
     }
 
-    public WithDrawResponse withDrawUser(double bet) {
+    public WithdrawResult withDrawUser(double bet) {
         LoginUser user = getUser();
 
         double balance = loginUserRepository.getBalance(user.getId());
 
         if(balance >= bet) {
             loginUserRepository.appendBalance(user.getId(), -bet);
-            return new WithDrawResponse(true, balance - bet );
+            return new WithdrawResult(true, balance - bet );
         }
 
-        return new WithDrawResponse(false, balance);
+        return new WithdrawResult(false, balance);
     }
 
     public double getBalance(Long id) {

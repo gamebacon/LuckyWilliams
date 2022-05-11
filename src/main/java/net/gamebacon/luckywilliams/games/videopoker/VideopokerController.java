@@ -1,6 +1,6 @@
 package net.gamebacon.luckywilliams.games.videopoker;
 
-import net.gamebacon.luckywilliams.games.util.WithDrawResponse;
+import net.gamebacon.luckywilliams.games.util.WithdrawResult;
 import net.gamebacon.luckywilliams.login_user.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,7 +24,7 @@ public class VideopokerController {
         LoginUser user = ((LoginUser) auth.getPrincipal());
 
         if(!model.containsAttribute("result"))
-            model.addAttribute("result", new WithDrawResponse(false, videopokerService.getBalance(user.getId())));
+            model.addAttribute("result", new WithdrawResult(false, videopokerService.getBalance(user.getId())));
 
         return "/games/videopoker";
     }
@@ -38,7 +38,10 @@ public class VideopokerController {
 
         VideoPokerSession result = videopokerService.validateSession(session);
 
-        re.addFlashAttribute("result", result.getWithDrawResponse());
+        if(result.getWithdrawResult() == null)
+            result.setWithdrawResult(new WithdrawResult(true, -1));
+
+        re.addFlashAttribute("result", result.getWithdrawResult());
 
         return result;
 
