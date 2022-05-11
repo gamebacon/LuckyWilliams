@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th=”http://www.thymeleaf.org” xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="shared/_layout">
+
+<head>
+    <link rel="stylesheet" href="/css/videopoker.css">
+    <link rel="stylesheet" href="/css/slots.css">
+    <title>Videopoker</title>
+</head>
+
+
+<body>
+<div layout:fragment="content">
+    <div class="text-center slot border-5">
+        <h1 class="fw-bolder h1">Slots</h1>
+            <div class="slot-interface m-auto text-center">
+
+                <div class="button-container row">
+                    <div class="col">
+                        <div class="slot-balance-section game-button">
+                            <label class="game-button-label" for="slot-balance">Balance</label>
+                            <input class="game-button-input" id="slot-balance" name="balance" readonly th:if="${result}" th:value="${result.balanceLeft}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row card-container g-1">
+                    <div id="card1" class="test"></div>
+                    <div id="card2" class="H11"></div>
+                    <div id="card3" class="H12"></div>
+                    <div id="card4" class="H13"></div>
+                    <div id="card5" class="H14"></div>
+                </div>
+
+                <div class="button-container row">
+                    <div class="row m-auto">
+                        <div class="col">
+                            <div class="slot-bet-section game-button">
+                                <label class="game-button-label" for="bet-input">Bet</label>
+                                <input class="game-button-input" id="bet-input" type="number" name="bet" min="1" max="5" value="1">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="slot-win-section game-button">
+                                <label class="game-button-label" for="slot-win-text">Win</label>
+                                <input class="game-button-input" id="slot-win-text" name="win" readonly>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <button onclick="requestDraw()" type="button" id="" class="game-button">
+                                <label class="game-button-label" for="">Draw</label>
+                            </button>
+                        </div>
+                        <div class="col">
+                            <div class="form-check form-switch slot-fast-mode game-button">
+                                <label class="form-check-label fw-bold" for="fast-mode-button">?</label>
+                                <input class="form-check-input m-auto" type="checkbox" role="switch" id="fast-mode-button">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check form-switch slot-sound-button game-button">
+                                <label class="form-check-label fw-bold" for="slot-sound-button">Sound</label>
+                                <input class="form-check-input m-auto" type="checkbox" role="switch" id="slot-sound-button">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="/js/videopoker.js"></script>
+
+</div>
+
+
+
+</body>
+</html>
