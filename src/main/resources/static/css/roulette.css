@@ -1,5 +1,20 @@
 
 
+#roulette-parent {
+    position: relative;
+    top: 0;
+    left: 0;
+}
 #roulette-wheel {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+#roulette-arrow {
+    top: 30px;
+    left: 30px;
+    position: absolute;
     transition-duration: 1s;
 }
+
