@@ -10,8 +10,8 @@
 
 <body>
 <div layout:fragment="content">
-    <div class="text-center slot border-5">
-        <h1 class="fw-bolder h1">Slots</h1>
+    <div class="text-center border-5" id="videopoker-container">
+        <h1 class="fw-bolder h1">Videopoker</h1>
             <div class="slot-interface m-auto text-center">
 
                 <div class="button-container row">
@@ -23,12 +23,32 @@
                     </div>
                 </div>
 
-                <div class="row card-container g-1">
-                    <div id="card1" class="test"></div>
-                    <div id="card2" class="H11"></div>
-                    <div id="card3" class="H12"></div>
-                    <div id="card4" class="H13"></div>
-                    <div id="card5" class="H14"></div>
+                <div id="card-container" class="row g-1">
+
+                    <div id="card1" class="back"></div>
+                    <div id="card2" class="back"></div>
+                    <div id="card3" class="back"></div>
+                    <div id="card4" class="back"></div>
+                    <div id="card5" class="back"></div>
+
+                </div>
+
+                <div class="row" id="videopoker-select-container">
+                    <div class="col">
+                        <input id="card-select-1" type="checkbox">
+                    </div>
+                    <div class="col">
+                        <input id="card-select-2" type="checkbox">
+                    </div>
+                    <div class="col">
+                        <input id="card-select-3" type="checkbox">
+                    </div>
+                    <div class="col">
+                        <input id="card-select-4" type="checkbox">
+                    </div>
+                    <div class="col">
+                        <input id="card-select-5" type="checkbox">
+                    </div>
                 </div>
 
                 <div class="button-container row">
@@ -46,8 +66,8 @@
                             </div>
                         </div>
                         <div class="col">
-                            <button onclick="requestDraw()" type="button" id="" class="game-button">
-                                <label class="game-button-label" for="">Draw</label>
+                            <button onclick="requestDraw()" type="button" id="videopoker-draw" class="game-button">
+                                <label class="game-button-label" for="videopoker-draw">Draw</label>
                             </button>
                         </div>
                         <div class="col">

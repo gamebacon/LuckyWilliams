@@ -2,13 +2,26 @@
 
 
 
+#videopoker-container {
+    background-color: #198754;
+    padding: 10px;
+    border: 5px solid white;
+}
 
 
+#card-container {
+    padding: 10px 0px;
+}
 
 
-
-
-
+#card1, #card2, #card3, #card4, #card5 {
+    background-size: 180px;
+    width: 180px;
+    height: 278px;
+    margin: auto;
+    display: inline-block;
+    image-rendering: pixelated;
+}
 
 
 
@@ -77,4 +90,4 @@
 .H14  { background-image: url("/images/videopoker/AH.png");}
 .S14  { background-image: url("/images/videopoker/AS.png");}
 
-.back { background-image: url("/images/videopoker/KC.png");}
+.back { background-image: url("/images/videopoker/back.png");}

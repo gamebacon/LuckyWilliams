@@ -70,7 +70,8 @@ function validateRequest(result) {
         winLabel.val("0")
         spin(result)
     } else {
-        alert("Not enough funds!!")
+        alert("Not enough money.")
+        playSoundAsync("/sound/lose.mp3", .1)
         busy = false
     }
 }
