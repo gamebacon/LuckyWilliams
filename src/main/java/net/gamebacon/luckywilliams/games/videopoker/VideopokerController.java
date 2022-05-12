@@ -20,13 +20,6 @@ public class VideopokerController {
 
     @GetMapping("/games/videopoker")
     public String showVideoPoker(Model model) {
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        LoginUser user = ((LoginUser) auth.getPrincipal());
-
-        if(!model.containsAttribute("balanceLeft"))
-            model.addAttribute("balanceLeft", videopokerService.getBalance(user.getId()));
-
         return "/games/videopoker";
     }
 

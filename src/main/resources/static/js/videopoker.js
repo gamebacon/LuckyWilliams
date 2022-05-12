@@ -71,9 +71,9 @@ function finishGame() {
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         success: function (result) {
-            JSON.stringify(result)
-            //console.log("Finish: " + JSON.stringify(result))
             /*
+            JSON.stringify(result)
+            console.log("Finish: " + JSON.stringify(result))
             for(let i = 0; i < 5; i++) {
                 console.log(i + " Value: " + result['cards'][i]['value'])
             }
@@ -110,10 +110,9 @@ const session = {
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         success: function (result) {
-            JSON.stringify(result)
-            //console.log("New: " + JSON.stringify(result))
-
             /*
+            JSON.stringify(result)
+            console.log("New: " + JSON.stringify(result))
             for(let i = 0; i < 5; i++) {
                 console.log(i + " Value: " + result['cards'][i]['value'])
             }
