@@ -40,12 +40,16 @@ function requestDraw() {
 }
 
 function finishGame() {
-    //sessionid & cards
 
     const cards = results['cards'];
 
     for(let i = 0; i < 5; i++) {
-        cards[i]['keep'] = cardSelectors[i].checked;
+        if(cardSelectors[i].checked) {
+            cards[i]['keep'] = true;
+            console.log("Keep: " + cards[i])
+        } else {
+            cardElements[i].className = "back";
+        }
     }
 
     $.ajax({
@@ -55,12 +59,11 @@ function finishGame() {
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         success: function (result) {
-
             console.log("Finish: " + JSON.stringify(result))
-            draw(result, true)
+            setTimeout(function () { draw(result, true) }, 1000)
         },
         error: function (err) {
-            console.log("Error :(((((((((((((((( : " + err)
+            console.log("Error: " + err)
             busy = false;
             results = null;
         }
@@ -99,7 +102,6 @@ const session = {
     })
 }
 
-
 function validateRequest(result) {
     const {withdrawResult, sessionId, winAmount, cards} = result
 
@@ -108,8 +110,11 @@ function validateRequest(result) {
     const {successful, balanceLeft} = withdrawResult;
 
     if(successful) {
-        resetCards(true)
-        setTimeout( function(){ draw(result, false) }, 0)
+        unSelect()
+        showBack()
+        setTimeout( function(){
+            draw(result, false)
+        }, 0)
     }  else {
         busy = false;
     }
@@ -121,11 +126,12 @@ function draw(result, reset) {
 
     const cards = results['cards'];
 
-    resetCards(false)
-
     for(let i = 0; i < 5; i++) {
-        if(!cards[i].keep)
-            setTimeout( function(){ displayCard(cards[i], i) }, 150 * i + 1000)
+        if(!cards[i].keep) {
+            setTimeout( function(){
+                displayCard(cards[i], i)
+            }, 150 * i)
+        }
 
     }
 
@@ -142,27 +148,21 @@ function displayCard(card, pos) {
     playSoundAsync("/sound/deal3.wav")
 }
 
-
-
-function resetCards(hardReset) {
+function unSelect() {
     for(let i = 0; i < 5; i++) {
+        cardSelectors[i].checked = false;
+    }
+}
 
-        if(!hardReset && cardSelectors[i].checked)
-            continue;
-
-        if(hardReset)
-            cardSelectors[i].checked = false;
+function showBack() {
+    for(let i = 0; i < 5; i++) {
         cardElements[i].className = "back";
+
     }
 }
 
 
 function playSoundAsync(path, volume = .3) {
-/*
-    if(!useSound.prop('checked'))
-        return;
- */
-
     sound = new Audio(path)
     sound.volume = volume
     sound.play()

@@ -3,6 +3,7 @@ package net.gamebacon.luckywilliams.games.videopoker;
 import lombok.AllArgsConstructor;
 import net.gamebacon.luckywilliams.games.util.WithdrawResult;
 import net.gamebacon.luckywilliams.games.videopoker.util.Card;
+import net.gamebacon.luckywilliams.games.videopoker.util.CardManager;
 import net.gamebacon.luckywilliams.games.videopoker.util.Deck;
 import net.gamebacon.luckywilliams.login_user.LoginUserService;
 import org.springframework.stereotype.Service;
@@ -69,6 +70,9 @@ public class VideopokerService {
 
         //validate result...
         //payout...
+        int handValue = CardManager.getHandValue(session.getCards());
+        String handName = CardManager.handName[handValue];
+        System.out.println(handName);
 
         videoPokerRepository.deleteById(session.getId());
 
