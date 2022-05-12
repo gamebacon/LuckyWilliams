@@ -44,7 +44,7 @@ public class Card implements Comparable<Card>, Serializable {
 
 
     public String toWordString() {
-        return String.format("%s OF %s", CardManager.valueWords[value], CardManager.suitWords[suit]);
+        return String.format("%s OF %s - Keep: %b", CardManager.valueWords[value], CardManager.suitWords[suit], keep);
         //return "" + suit + value + "";
     }
 }

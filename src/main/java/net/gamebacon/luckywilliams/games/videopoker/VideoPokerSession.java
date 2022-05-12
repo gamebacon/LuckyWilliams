@@ -7,6 +7,7 @@ import net.gamebacon.luckywilliams.login_user.LoginUser;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Getter
 @Setter
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "videopoker_session")
 public class VideoPokerSession {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,5 +39,19 @@ public class VideoPokerSession {
     @Transient
     private int winAmount;
 
+    private String handResult;
 
+    @Override
+    public String toString() {
+        return "VideoPokerSession{" +
+                "id=" + id +
+                ", sessionId='" + sessionId + '\'' +
+                ", bet=" + bet +
+                ", cards=" + Arrays.toString(cards) +
+                ", userId=" + userId +
+                ", withdrawResult=" + withdrawResult +
+                ", winAmount=" + winAmount +
+                ", handResult='" + handResult + '\'' +
+                '}';
+    }
 }

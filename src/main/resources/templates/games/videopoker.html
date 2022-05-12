@@ -11,75 +11,99 @@
 <body>
 <div layout:fragment="content">
     <div class="text-center border-5" id="videopoker-container">
+
+
         <h1 class="fw-bolder h1">Videopoker</h1>
+
+        <div>
+            <span id="videopoker-hand-result">
+            </span>
+        </div>
+
             <div class="slot-interface m-auto text-center">
 
                 <div class="button-container row">
                     <div class="col">
                         <div class="slot-balance-section game-button">
-                            <label class="game-button-label" for="slot-balance">Balance</label>
-                            <input class="game-button-input" id="slot-balance" name="balance" readonly th:if="${result}" th:value="${result.balanceLeft}">
+                            <label class="game-button-label" for="videopoker-balance">Balance</label>
+                            <input class="game-button-input" id="videopoker-balance" name="balance" readonly>
                         </div>
                     </div>
                 </div>
 
                 <div id="card-container" class="row g-1">
 
-                    <div id="card1" class="back"></div>
-                    <div id="card2" class="back"></div>
-                    <div id="card3" class="back"></div>
-                    <div id="card4" class="back"></div>
-                    <div id="card5" class="back"></div>
+                    <label onclick="check(0)" class="col">
+                        <div id="card1" class="back"></div>
+                        <label id="keep-1"></label>
+                        <!--<input onclick="check(0)" id="card-select-1" type="checkbox">-->
+                    </label>
+                    <label onclick="check(1)" class="col">
+                        <div id="card2" class="back"></div>
+                        <label id="keep-2"></label>
+                    </label>
+                    <label onclick="check(2)" class="col">
+                        <div id="card3" class="back"></div>
+                        <label id="keep-3"></label>
+                    </label>
+                    <label onclick="check(3)" class="col">
+                        <div id="card4" class="back"></div>
+                        <label id="keep-4"></label>
+                    </label>
+                    <label onclick="check(4)" class="col">
+                        <div id="card5" class="back"></div>
+                        <label id="keep-5"></label>
+                    </label>
 
                 </div>
 
+                <!--
                 <div class="row" id="videopoker-select-container">
                     <div class="col">
-                        <input id="card-select-1" type="checkbox">
                     </div>
                     <div class="col">
-                        <input id="card-select-2" type="checkbox">
                     </div>
                     <div class="col">
-                        <input id="card-select-3" type="checkbox">
                     </div>
                     <div class="col">
-                        <input id="card-select-4" type="checkbox">
                     </div>
                     <div class="col">
-                        <input id="card-select-5" type="checkbox">
                     </div>
                 </div>
+                -->
 
                 <div class="button-container row">
                     <div class="row m-auto">
                         <div class="col">
                             <div class="slot-bet-section game-button">
-                                <label class="game-button-label" for="bet-input">Bet</label>
-                                <input class="game-button-input" id="bet-input" type="number" name="bet" min="1" max="5" value="1">
+                                <label class="game-button-label" for="videopoker-bet-input">Bet</label>
+                                <input id="videopoker-bet-input" class="game-button-input" type="number" name="bet" min="1" max="5" value="1">
                             </div>
                         </div>
                         <div class="col">
                             <div class="slot-win-section game-button">
-                                <label class="game-button-label" for="slot-win-text">Win</label>
-                                <input class="game-button-input" id="slot-win-text" name="win" readonly>
+                                <label class="game-button-label" for="videopoker-win-text">Win</label>
+                                <input class="game-button-input" id="videopoker-win-text" name="win" readonly>
                             </div>
                         </div>
                         <div class="col">
                             <button onclick="requestDraw()" type="button" id="videopoker-draw" class="game-button">
-                                <label class="game-button-label" for="videopoker-draw">Draw</label>
+                                <label id="videopoker-button-label" class="game-button-label" for="videopoker-draw">New game</label>
                             </button>
                         </div>
                         <div class="col">
-                            <div class="form-check form-switch slot-fast-mode game-button">
-                                <label class="form-check-label fw-bold" for="fast-mode-button">?</label>
-                                <input class="form-check-input m-auto" type="checkbox" role="switch" id="fast-mode-button">
-                            </div>
+                            <a style="color: inherit" class="text-decoration-none" target="_blank" href="https://en.wikipedia.org/wiki/Video_poker">
+                                <button type="button" id="videopoker-info" class="game-button">
+                                <label for="videopoker-info" class="game-button-label" >
+                                        ?
+                                </label>
+                            </button>
+                            </a>
                         </div>
                         <div class="col">
                             <div class="form-check form-switch slot-sound-button game-button">
-                                <label class="form-check-label fw-bold" for="slot-sound-button">Sound</label>
-                                <input class="form-check-input m-auto" type="checkbox" role="switch" id="slot-sound-button">
+                                <label class="form-check-label fw-bold" for="videopoker-sound-button">Sound</label>
+                                <input class="form-check-input m-auto" type="checkbox" role="switch" id="videopoker-sound-button">
                             </div>
                         </div>
                     </div>

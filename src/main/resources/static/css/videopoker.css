@@ -1,6 +1,19 @@
 
 
 
+#videopoker-hand-result {
+    padding: 5px;
+    font-weight: bold;
+    color: white;
+    font-size: 45px;
+    height: 86px;
+    display: block;
+}
+
+#card-container > .col {
+    display: flex;
+    flex-direction: column;
+}
 
 #videopoker-container {
     background-color: #198754;
@@ -11,8 +24,16 @@
 
 #card-container {
     padding: 10px 0px;
+    height: 350px;
 }
 
+#keep-1, #keep-2, #keep-3, #keep-4, #keep-5 {
+    margin: 0;
+    font-weight: bolder;
+    color: gold;
+    font-size: 100%;
+    text-transform: uppercase;
+}
 
 #card1, #card2, #card3, #card4, #card5 {
     background-size: 180px;

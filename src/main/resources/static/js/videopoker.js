@@ -8,13 +8,21 @@ const cardElements = [
     document.getElementById('card5')
 ];
 
-const cardSelectors = [
-    document.getElementById('card-select-1'),
-    document.getElementById('card-select-2'),
-    document.getElementById('card-select-3'),
-    document.getElementById('card-select-4'),
-    document.getElementById('card-select-5')
+const cardSelectorLabels = [
+    document.getElementById('keep-1'),
+    document.getElementById('keep-2'),
+    document.getElementById('keep-3'),
+    document.getElementById('keep-4'),
+    document.getElementById('keep-5')
 ];
+
+const winText = document.getElementById('videopoker-win-text')
+const balanceInput = document.getElementById('videopoker-balance')
+const handResult = document.getElementById('videopoker-hand-result')
+const betInput = document.getElementById('videopoker-bet-input')
+const soundSwitch = document.getElementById('videopoker-sound-button')
+const drawButton = document.getElementById('videopoker-draw')
+const drawButtonLabel = document.getElementById('videopoker-button-label')
 
 
 const suits = [ 'S', 'D', 'C', 'H' ];
@@ -24,12 +32,16 @@ let results;
 
 let busy = false;
 
-function requestDraw() {
+soundSwitch.checked = true;
+
+ function requestDraw() {
 
     if(busy)
         return;
 
-    busy = true;
+    setBusy(true)
+
+     betInput.disabled = true;
 
     if(results) {
         finishGame();
@@ -44,10 +56,10 @@ function finishGame() {
     const cards = results['cards'];
 
     for(let i = 0; i < 5; i++) {
-        if(cardSelectors[i].checked) {
-            cards[i]['keep'] = true;
-            console.log("Keep: " + cards[i])
-        } else {
+        //if(cardSelectors[i].checked) {
+         //   cards[i]['keep'] = true;
+
+        if(!cards[i]['keep']){
             cardElements[i].className = "back";
         }
     }
@@ -59,13 +71,19 @@ function finishGame() {
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         success: function (result) {
-            console.log("Finish: " + JSON.stringify(result))
+            JSON.stringify(result)
+            //console.log("Finish: " + JSON.stringify(result))
+            /*
+            for(let i = 0; i < 5; i++) {
+                console.log(i + " Value: " + result['cards'][i]['value'])
+            }
+             */
             setTimeout(function () { draw(result, true) }, 1000)
         },
         error: function (err) {
             console.log("Error: " + err)
-            busy = false;
-            results = null;
+            setBusy(false)
+            resetValues()
         }
     })
 
@@ -79,7 +97,7 @@ const session = {
     "balanceLeft": -1 
   },
   "winAmount": -1,
-  "bet": 2,
+  "bet": betInput.value,
   "cards": [],
   "sessionId": -1
 };
@@ -92,31 +110,37 @@ const session = {
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         success: function (result) {
-            console.log("New: " + JSON.stringify(result))
+            JSON.stringify(result)
+            //console.log("New: " + JSON.stringify(result))
+
+            /*
+            for(let i = 0; i < 5; i++) {
+                console.log(i + " Value: " + result['cards'][i]['value'])
+            }
+             */
+
             validateRequest(result)
         },
         error: function (err) {
             console.log("Error: " + err)
-            busy = false;
+            setBusy(false)
         }
     })
 }
 
 function validateRequest(result) {
     const {withdrawResult, sessionId, winAmount, cards} = result
-
-
-
     const {successful, balanceLeft} = withdrawResult;
 
     if(successful) {
-        unSelect()
-        showBack()
+        balanceInput.value = balanceLeft;
+        resetValues()
         setTimeout( function(){
             draw(result, false)
         }, 0)
     }  else {
-        busy = false;
+        playSoundAsync("/sound/lose.mp3", .1)
+        setBusy(false)
     }
 
 }
@@ -132,13 +156,41 @@ function draw(result, reset) {
                 displayCard(cards[i], i)
             }, 150 * i)
         }
-
     }
 
-    busy = false;
 
-    if(reset)
-        results = null;
+    if(reset) {
+        finish()
+    } else {
+        drawButtonLabel.innerText = "Finish"
+    }
+
+    setBusy(false)
+}
+
+function resetValues() {
+    handResult.innerHTML = "";
+    winText.value = "";
+    betInput.disabled = true;
+    unSelect()
+    showBack()
+    results = null;
+}
+
+function finish() {
+    drawButtonLabel.innerText = "New game";
+    handResult.innerHTML = results['handResult'];
+    winText.value = results['winAmount']
+    balanceInput.value = results['withdrawResult']['balanceLeft'];
+    betInput.disabled = false;
+
+    if(results['winAmount'] > 0) {
+        playSoundAsync("/sound/win.mp3")
+    } else {
+        playSoundAsync("/sound/lose.mp3")
+    }
+
+    results = null;
 }
 
 function displayCard(card, pos) {
@@ -150,21 +202,40 @@ function displayCard(card, pos) {
 
 function unSelect() {
     for(let i = 0; i < 5; i++) {
-        cardSelectors[i].checked = false;
+        cardSelectorLabels[i].innerText = "";
     }
 }
 
 function showBack() {
     for(let i = 0; i < 5; i++) {
         cardElements[i].className = "back";
-
     }
 }
 
 
 function playSoundAsync(path, volume = .3) {
+
+     if(!soundSwitch.checked)
+         return;
+
     sound = new Audio(path)
     sound.volume = volume
     sound.play()
 }
+
+
+function check(index) {
+     if(results && !busy) {
+         const card = results['cards'][index];
+         card['keep'] = !card['keep']
+         cardSelectorLabels[index].innerText = card['keep'] ? "KEEP" : "";
+     }
+}
+
+function setBusy(_busy) {
+     busy = _busy;
+
+     drawButton.disabled = busy;
+}
+
 

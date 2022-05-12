@@ -12,6 +12,18 @@ public class CardManager {
     public final static String[] suitWords = {"SPADES","DIAMONDS","CLUBS","HEARTS"};
     public final static String[] valueWords = {"TWO","THREE","FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN", "JACK", "QUEEN", "KING", "ACE"};
 
+    public static final String[][] rowData = {
+            {"Royal flush........."," 250"," 500"," 750","1000","4000"},
+            {"Straight flush......","  50"," 100"," 150"," 250"," 500"},
+            {"Four of a kind......","  25","  50","  75"," 125"," 250"},
+            {"Full house..........","   9","  18","  27","  45","  90"},
+            {"Flush...............","   6","  15","  18","  30","  60"},
+            {"Straight............","   4","   5","  12","  20","  40"},
+            {"Three of a kind.....","   3","   6","   9","  15","  30"},
+            {"Two pair............","   2","   4","   6","  10","  20"},
+            {"Jack's or better....","   1","   2","   3","   5","  10"}
+    };
+
     public static final String[] handName = {
             "Royal flush",
             "Straight flush",
@@ -25,6 +37,15 @@ public class CardManager {
             "Low pair",
             "High Card"
     };
+
+    public static int getWin(int handValue, int betLevel) {
+        int win = handValue > 8 ? 0 : Integer.parseInt(rowData[handValue][betLevel].trim());
+
+        //System.out.println(String.format("HandVal: %d, Bet: %d, Win: %d", handValue, betLevel, win));
+
+        return win;
+    }
+
     private static Card[] sortHand(Card[] cards_) {
         boolean sorted;
         do {

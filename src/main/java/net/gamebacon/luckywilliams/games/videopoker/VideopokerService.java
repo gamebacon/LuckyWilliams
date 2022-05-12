@@ -63,16 +63,26 @@ public class VideopokerService {
             deck.remove(card);
         }
 
+
         for(int i = 0; i < 5; i++) {
             if(!session.getCards()[i].keep)
                 session.getCards()[i] = deck.draw();
         }
 
-        //validate result...
-        //payout...
-        int handValue = CardManager.getHandValue(session.getCards());
+
+        int handValue = CardManager.getHandValue(session.getCards().clone());
         String handName = CardManager.handName[handValue];
-        System.out.println(handName);
+        int winAmount = CardManager.getWin(handValue, session.getBet());
+
+        session.setHandResult(handName);
+        session.setWinAmount(winAmount);
+
+        if(winAmount > 0)
+            userService.depositUser(winAmount);
+
+
+        session.setWithdrawResult(new WithdrawResult(true, userService.getBalance(session.getUserId())));
+
 
         videoPokerRepository.deleteById(session.getId());
 
