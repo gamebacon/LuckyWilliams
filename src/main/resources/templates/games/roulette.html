@@ -10,17 +10,25 @@
 <div layout:fragment="content">
     <h1>Roulette</h1>
     <div>
-        <div class="mb-5"  id="roulette-parent">
-            <img src="/images/wheel.png" id="roulette-wheel">
-            <img src="/images/arrow.png" id="roulette-arrow">
+        <div class="row">
+            <input onclick="startGame()" type="button" value="Start">
+        </div>
+        <div class="row">
+            <div class="col mb-5 p-0"  id="roulette-parent">
+                <img src="/images/wheel.png" id="roulette-wheel">
+                <img src="/images/arrow.png" id="roulette-arrow">
+            </div>
+            <div class="col" id="betting-board">
+
+            </div>
         </div>
 
         <div class="bg-warning">
-            <input type="text" id="rol-in">
-            <button onclick="spinRoulette(360)">Spin 360</button>
-            <button onclick="spinRoulette(9.73)">Spin 1/37</button>
+            <input type="text" id="rol-in" style="width: 400px">
+            <button onclick="spinWithInput()">Input</button>
             <button onclick="spinRoulette(-1)">Rand</button>
             <button onclick="resetRoulette()">Reset</button>
+            <button onclick="Test()">Test</button>
         </div>
     </div>
 

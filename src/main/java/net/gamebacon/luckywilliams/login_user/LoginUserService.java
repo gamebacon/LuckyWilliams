@@ -116,6 +116,16 @@ public class LoginUserService implements UserDetailsService {
         return ((LoginUser) auth.getPrincipal());
     }
 
+    public LoginUser getUserFromDB() {
+        try {
+            return getUser(getUser().getId());
+        } catch (NoSuchUserException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public WithdrawResult withDrawUser(double bet) {
         LoginUser user = getUser();
 

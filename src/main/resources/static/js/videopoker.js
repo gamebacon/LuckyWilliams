@@ -139,6 +139,7 @@ function validateRequest(result) {
         }, 0)
     }  else {
         playSoundAsync("/sound/lose.mp3", .1)
+        betInput.disabled = false;
         setBusy(false)
     }
 

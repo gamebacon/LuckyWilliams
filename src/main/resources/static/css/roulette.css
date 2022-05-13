@@ -20,5 +20,47 @@
      */
     position: absolute;
     transition-duration: 1s;
+
 }
 
+.roulette-row {
+    margin: auto;
+}
+
+.roulette-num {
+    color: white;
+    width: 116px;
+    /*
+    height: 69px;
+     */
+    text-align: center;
+    padding: -15px;
+    border: 1px solid white;
+}
+
+.roulette-bet-input {
+    width: 50px;
+}
+
+.red {
+    background-color: red;
+}
+.black {
+    background-color: black;
+}
+.green {
+    background-color: green;
+}
+
+.roulette-number-win {
+    background-color: gold;
+}
+
+@keyframes wheelRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}

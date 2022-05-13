@@ -96,9 +96,7 @@ public class MainController {
     @GetMapping("/account")
     private String viewAccount(Model model) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        LoginUser loginUser = ((LoginUser) auth.getPrincipal());
+        LoginUser loginUser = loginUserService.getUserFromDB();
         model.addAttribute("user", loginUser);
 
         return "/account/account";
