@@ -24,10 +24,12 @@
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
                 <td><a href="/admin/users/new" class="btn btn-primary">New User</a></td>
             </tr>
             <tr>
                 <th>Id</th>
+                <th></th>
                 <th>Firstname</th>
                 <th>Surname</th>
                 <th>Username</th>
@@ -40,6 +42,7 @@
                 <th:block th:each="user : ${listUsers}">
                     <tr class="">
                         <td>[[${user.id}]]</td>
+                        <td><img class="users-profile" th:src="${user.imgUrl}"></td>
                         <td>[[${user.firstname}]]</td>
                         <td>[[${user.surname}]]</td>
                         <td>[[${user.username}]]</td>

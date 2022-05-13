@@ -4,12 +4,13 @@
 
 
 .slot {
-    background-color: blue;
+    background-color: #5534ca;
     height: 600px;
     width: 700px;
     margin: auto;
     padding: 30px;
-    border: 5px solid white;
+    border: 5px solid gold;
+    border-radius: 30px;
 }
 
 

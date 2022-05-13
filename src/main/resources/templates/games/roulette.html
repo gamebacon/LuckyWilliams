@@ -3,18 +3,18 @@
 
 <head>
     <link rel="stylesheet" href="/css/roulette.css">
+    <link rel="stylesheet" href="/css/slots.css">
     <title>Roulette</title>
 </head>
 
 <body>
 <div layout:fragment="content">
-    <h1>Roulette</h1>
-    <div>
+    <div id="roulette-container">
+        <h1 id="roulette-heading">Roulette</h1>
+
+
         <div class="row">
-            <input onclick="startGame()" type="button" value="Start">
-        </div>
-        <div class="row">
-            <div class="col mb-5 p-0"  id="roulette-parent">
+            <div class="col mb-5 p-0"  id="roulette-wheel-parent">
                 <img src="/images/wheel.png" id="roulette-wheel">
                 <img src="/images/arrow.png" id="roulette-arrow">
             </div>
@@ -23,16 +23,47 @@
             </div>
         </div>
 
-        <div class="bg-warning">
-            <input type="text" id="rol-in" style="width: 400px">
-            <button onclick="spinWithInput()">Input</button>
-            <button onclick="spinRoulette(-1)">Rand</button>
-            <button onclick="resetRoulette()">Reset</button>
-            <button onclick="Test()">Test</button>
+        <div class="button-container row">
+            <div class="row m-auto" id="roulette-button-container">
+                <div class="col">
+                    <div class="slot-bet-section game-button">
+                        <label class="game-button-label" for="roulette-bet-input-show">Total bets</label>
+                        <input id="roulette-bet-input-show" class="game-button-input" readonly type="text" name="bet" min="1" max="30" value="0">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="slot-win-section game-button">
+                        <label class="game-button-label" for="roulette-win-text">Win</label>
+                        <input class="game-button-input" id="roulette-win-text" name="win" readonly>
+                    </div>
+                </div>
+                <div class="col">
+                    <button onclick="requestStartGame()" type="button" id="roulette-start" class="game-button">
+                        <label id="roulette-button-label" class="game-button-label" for="roulette-start">Start</label>
+                    </button>
+                </div>
+                <div class="col">
+                    <a style="color: inherit" class="text-decoration-none" target="_blank" href="https://www.wikihow.com/Play-Roulette">
+                        <button type="button" id="roulette-info" class="game-button" style="border: 3px solid black;">
+                            <label for="roulette-info" class="game-button-label" >
+                                ?
+                            </label>
+                        </button>
+                    </a>
+                </div>
+                <div class="col">
+                    <div class="form-check form-switch slot-sound-button game-button">
+                        <label class="form-check-label fw-bold" for="roulette-sound-button">Sound</label>
+                        <input class="form-check-input m-auto" type="checkbox" role="switch" id="roulette-sound-button">
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 
 
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="/js/roulette.js"> </script>
 
 </div>

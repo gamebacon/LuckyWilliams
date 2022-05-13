@@ -67,7 +67,7 @@ public class SlotsService {
             result = Util.randRange(4, 8);
         }
 
-        System.out.println(String.format("Rand: %.1f - Num: %d", rand, result));
+        //System.out.println(String.format("Rand: %.1f - Num: %d", rand, result));
 
         return result;
     }
@@ -96,7 +96,7 @@ public class SlotsService {
             }
         }
 
-        System.out.println("Win: " + win + ", Wheel: " + Arrays.toString(wheel));
+        //System.out.println("Win: " + win + ", Wheel: " + Arrays.toString(wheel));
 
         return win;
     }

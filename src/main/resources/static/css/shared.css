@@ -26,3 +26,16 @@ footer {
     font-size: 10px;
     margin-top: 25px;
 }
+
+.dropdown-thing {
+    display: flex;
+    padding: 5px
+}
+.dropdown-icon {
+    width: 25px;
+    height: 25px;
+}
+.dropdown-icon-text {
+    line-height: 15px;
+    padding: 10px 5px;
+}

@@ -64,3 +64,9 @@
 label {
     margin-bottom: 0.5rem;
 }
+
+.users-profile {
+    width: 50px;
+    background-color: #dfdfdf;
+    border-radius: 25px;
+}
