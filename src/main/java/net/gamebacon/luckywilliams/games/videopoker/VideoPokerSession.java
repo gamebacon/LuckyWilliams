@@ -7,6 +7,7 @@ import net.gamebacon.luckywilliams.login_user.LoginUser;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @Getter
@@ -32,6 +33,9 @@ public class VideoPokerSession {
 
     @Column
     private Long userId;
+
+    @Column
+    private LocalDateTime expires;
 
     @Transient
     private WithdrawResult withdrawResult;

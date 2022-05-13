@@ -8,6 +8,7 @@ import net.gamebacon.luckywilliams.games.videopoker.util.Deck;
 import net.gamebacon.luckywilliams.login_user.LoginUserService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
@@ -48,6 +49,7 @@ public class VideopokerService {
         session.setCards(cards);
         session.setBet(session.getBet());
         session.setUserId(userService.getUser().getId());
+        session.setExpires(LocalDateTime.now().plusMinutes(15));
         videoPokerRepository.save(session);
 
 
@@ -94,12 +96,22 @@ public class VideopokerService {
         return userService.getBalance(id);
     }
 
+    private boolean isExpired(VideoPokerSession session) {
+
+        if(!LocalDateTime.now().isBefore(session.getExpires())) {
+            videoPokerRepository.deleteById(session.getId());
+            return true;
+        }
+
+        return false;
+    }
+
     public VideoPokerSession validateSession(VideoPokerSession session) {
 
         Long userId = userService.getUser().getId();
         Optional<VideoPokerSession> optional = videoPokerRepository.findByUserId(userId);
 
-        if(optional.isPresent()) {
+        if(optional.isPresent() && !isExpired(optional.get())) {
             VideoPokerSession ogSession = optional.get();
 
             for(int i = 0; i < session.getCards().length; i++) {
