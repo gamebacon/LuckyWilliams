@@ -3,31 +3,64 @@
 
 <head>
     <title>My account</title>
+    <link rel="stylesheet" href="/css/account.css">
 </head>
 
 <body>
     <div layout:fragment="content">
-        <div class="bg-white ">
-            <div class="p-lg-5 bg-light rounded-3">
-                <h1 class="h1 fw-bolder">My account</h1>
+
+
+        <div class="account">
+            <div class="account-top row">
+                <div class="col-5 account-img-container">
+                    <img class="account-img" th:src="${user.getImgUrl()}">
+                </div>
+                <div class="col-7 account-heading d-flex flex-column">
+                    <div class="account-fullname h3">
+                        <label th:text="${user.getFullName()}"> </label>
+                    </div>
+                    <div class="account-email h6">
+                        <a th:text="${user.getEmail()}">william.with@gmail.com</a>
+                    </div>
+                </div>
+                <h3 class="row account-title">Account</h3>
                 <hr>
-                <div class="text-center">
-
-                    <div class="row">
-                        <div class="">
-                            <label>Firstname: <span th:text="${user.getFirstname()}"></span></label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="">
-                            <label>Firstname: Conrad</label>
-                        </div>
-                    </div>
-
+            </div>
+            <div class="account-bottom">
+                <div class="row account-row">
+                    <label class="account-label col">
+                        Username
+                    </label>
+                    <input th:value="${user.getUsername()}" class="col account-input" disabled>
+                </div>
+                <div class="row account-row">
+                    <label class="account-label col">
+                        Email
+                    </label>
+                    <input th:value="${user.getEmail()}" class="col account-input" disabled>
+                </div>
+                <div class="row account-row">
+                    <label class="account-label col">
+                        Password
+                    </label>
+                    <input th:value="${user.getPassword()}" class="col account-input" type="password" disabled>
+                </div>
+                <div class="row account-row">
+                    <label class="account-label col">
+                        Credits
+                    </label>
+                    <input th:value="${user.getBalance()}" class="col account-input" disabled>
+                </div>
+                <div class="row account-row">
+                    <label class="account-label col">
+                       Gender
+                    </label>
+                    <input th:value="${user.getGender()}" class="col account-input" disabled>
                 </div>
             </div>
         </div>
+
+
     </div>
 </body>
 </html>

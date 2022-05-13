@@ -1,0 +1,63 @@
+
+.account {
+    background-color: white;
+    min-height: 350px;
+    padding: 10px;
+    box-shadow: 0px 0px 5px;
+    border-radius: 4px;
+    margin: auto;
+    max-width: 750px;
+}
+.account-top {
+    margin: auto;
+}
+.account-title {
+    color: #6c6c6c;
+    padding-right: 5px;
+    padding-left: 20px;
+}
+
+
+.account-bottom {
+    margin: auto;
+}
+
+.account-row {
+    margin: auto;
+    padding: 20px;
+}
+
+.account-heading {
+    padding: 20px;
+}
+.account-email {
+    color: #0d6efd;
+    text-decoration: underline;
+}
+
+.account-fullname {
+    font-weight: initial;
+    color: #515151;
+    font-size: 30px;
+}
+.account-img {
+    height: 160px;
+    width: 160px;
+    border-radius: 80px;
+    border: 5px solid rgba(111, 111, 111, 0.23);
+    background-color: #f0f0f0;
+    
+}
+.account-img-container {
+    padding: 25px;
+}
+
+.account-label {
+   color: #6a6a6ae0;
+}
+
+.account-input {
+   background: #f4f4f4;
+   border: 1px solid #82828236;
+   border-radius: 2px;
+}

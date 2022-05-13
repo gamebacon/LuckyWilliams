@@ -54,6 +54,9 @@ public class LoginUser implements UserDetails {
     private double balance;
 
     @Column
+    private String imgUrl;
+
+    @Column
     private boolean isExpired;
 
     @Column
@@ -63,7 +66,7 @@ public class LoginUser implements UserDetails {
     private boolean isVerified;
 
 
-    public LoginUser(String username, String password, String email, Role role, Gender gender, String firstname, String surname) {
+    public LoginUser(String username, String password, String email, Role role, Gender gender, String firstname, String surname, String imgUrl) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -74,6 +77,7 @@ public class LoginUser implements UserDetails {
         this.isVerified = false;
         this.firstname = firstname;
         this.surname = surname;
+        this.imgUrl = imgUrl;
     }
 
     @Override
@@ -123,6 +127,10 @@ public class LoginUser implements UserDetails {
 
     public boolean isEnabled() {
         return !isLocked;
+    }
+
+    public String getFullName() {
+        return String.format("%s %s", firstname, surname);
     }
 
 }
