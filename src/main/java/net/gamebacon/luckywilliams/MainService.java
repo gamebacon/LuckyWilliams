@@ -72,7 +72,7 @@ public class MainService {
     private String buildEmail(LoginUser loginUser, String link) {
 
         String unFormatted = """
-       <div><div><div>Dear %s, <p>To verify your account click the link below: <br aria-hidden="true"><a href="%s" target="_blank" rel="noopener noreferrer" data-auth="NotApplicable" data-linkindex="0">%s</a> </p><p>If you did not request a password reset from Lucky William's, you can safely ignore this email.</p><p>Yours truly, <br aria-hidden="true">Lucky William's <br aria-hidden="true"><a href="http://localhost:8080" target="_blank" rel="noopener noreferrer" data-auth="NotApplicable" data-linkindex="1">https://www.luckywilliams.com</a> <br aria-hidden="true"><br aria-hidden="true"></p></div></div></div> 
+       <div><div><div>Dear %s, <p>To verify your account click the link below: <br aria-hidden="true"><a href="%s" target="_blank" rel="noopener noreferrer" data-auth="NotApplicable" data-linkindex="0">%s</a> </p><p></p><p>Yours truly, <br aria-hidden="true">Lucky William's <br aria-hidden="true"><a href="http://localhost:8080" target="_blank" rel="noopener noreferrer" data-auth="NotApplicable" data-linkindex="1">https://www.luckywilliams.com</a> <br aria-hidden="true"><br aria-hidden="true"></p></div></div></div> 
         """;
         return String.format(unFormatted, loginUser.getFirstname(), link, link);
     }
