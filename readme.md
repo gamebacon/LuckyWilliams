@@ -17,7 +17,7 @@
   
   
 ### instructions
-* Before starting the program you need to define database details in application.properties
+* Before starting the program you need to define database details in src/main/resources/application.properties
 
 * In order to test the mail services you need to install and have maildev running: https://github.com/maildev/maildev
 
