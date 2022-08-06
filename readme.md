@@ -5,9 +5,9 @@
   <br>
   <img src="preview/profile.png" width="90%"/>
   <br>
-  <img src="preview/slots.png" width="33%"/>
-  <img src="preview/roulette.png" width="33%"/>
-  <img src="preview/videopoker.png" width="33%"/>
+  <img src="preview/slots.png" width="90%"/>
+  <img src="preview/roulette.png" width="90%"/>
+  <img src="preview/videopoker.png" width="90%"/>
 </div>
   
   
