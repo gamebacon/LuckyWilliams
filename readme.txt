@@ -1,5 +1,5 @@
 
-<img src="home.png" alt="J" width="200"/>
+<img src="/pics/home.png" alt="J" width="200"/>
 
 * Before starting the program you need to define database details in application.properties
 
