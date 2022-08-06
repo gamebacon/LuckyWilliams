@@ -2,6 +2,10 @@
 ![Test Image 1](preview/register.png)
 ![Test Image 1](preview/profile.png)
 
+<details>
+  <summary>The title of the image group</summary><details>
+  <img src="preview/profile.png" name="image-name">
+</details>
 
 * Before starting the program you need to define database details in application.properties
 
