@@ -1,5 +1,5 @@
+![Test Image 1](pics/homo.png)
 
-<img src="pics/home.png" alt="J" width="200"/>
 
 * Before starting the program you need to define database details in application.properties
 
