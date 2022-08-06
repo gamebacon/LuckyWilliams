@@ -1,12 +1,9 @@
-![Test Image 1](preview/login.png)
-![Test Image 1](preview/register.png)
+![Test Image 1](preview/login.png) ![Test Image 1](preview/register.png)
 ![Test Image 1](preview/profile.png)
-
-<details>
-  <summary>The title of the image group</summary><details>
-  <img src="preview/profile.png" name="image-name">
-</details>
-
+  
+  
+  
+  
 * Before starting the program you need to define database details in application.properties
 
 * In order to test the mail services you need to install and have maildev running: https://github.com/maildev/maildev
