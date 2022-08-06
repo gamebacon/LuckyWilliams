@@ -2,6 +2,8 @@
 <div>
   <img src="preview/login.png" width="30%"/>
   <img src="preview/register.png" width="30%"/>
+  <br>
+  <img src="preview/register.png" width="60%"/>
 </div>
   
   
