@@ -3,7 +3,7 @@
   <img src="preview/login.png" width="45%"/>
   <img src="preview/register.png" width="45%"/>
   <br>
-  <img src="preview/register.png" width="90%"/>
+  <img src="preview/profile.png" width="90%"/>
 </div>
   
   
