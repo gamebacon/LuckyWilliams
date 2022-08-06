@@ -1,5 +1,5 @@
-![Screenshot](pics/home.png)
 
+<img src="pics/home">
 
 * Before starting the program you need to define database details in application.properties
 
