@@ -1,4 +1,4 @@
-![Test Image 1](preview/login.png) ![Test Image 1](preview/register.png)
+![Test Image 1](preview/login.png)![Test Image 1](preview/register.png)
 ![Test Image 1](preview/profile.png)
   
   
