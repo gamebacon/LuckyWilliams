@@ -1,6 +1,6 @@
-# This is a school project for spring boot & mysql database
+# This was my school project with spring boot & mysql database
 
-
+## some preview images
 <div>
   <img src="preview/login.png" width="45%"/>
   <img src="preview/register.png" width="45%"/>
