@@ -84,12 +84,17 @@ public class LoginUser implements UserDetails {
     public String toString() {
         return "LoginUser{" +
                 "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", surname='" + surname + '\'' +
+                ", gender=" + gender +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", role=" + role +
-                ", expired=" + isExpired +
-                ", locked=" + isLocked +
+                ", balance=" + balance +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", isExpired=" + isExpired +
+                ", isLocked=" + isLocked +
                 ", isVerified=" + isVerified +
                 '}';
     }

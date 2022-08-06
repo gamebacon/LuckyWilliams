@@ -45,15 +45,17 @@ public class LoginUserService implements UserDetailsService {
 
         String encodedPassword = cryptPasswordEncoder.encode(loginUser.getPassword());
 
-        if(newUser)
+        if(newUser) {
             loginUser.setPassword(encodedPassword);
-        else {
+            loginUser.setImgUrl(String.format("https://avatars.dicebear.com/api/avataaars/%s.svg", loginUser.getUsername()));
+        } else {
 
             if(!loginUserRepository.getById(loginUser.getId()).getPassword().equals(loginUser.getPassword()))
                 loginUser.setPassword(encodedPassword);
 
             loginUserRepository.deleteById(loginUser.getId());
         }
+
 
         loginUserRepository.save(loginUser);
     }

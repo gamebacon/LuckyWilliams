@@ -36,8 +36,6 @@ public class RegistrationService {
 
         String imgUrl = String.format("https://avatars.dicebear.com/api/avataaars/%s.svg", request.getUsername());
 
-        System.out.println("url: " + imgUrl);
-
         LoginUser loginUser = new LoginUser(request.getUsername(), request.getPassword(), request.getEmail(), Role.DEFAULT, request.getGender(), request.getFirstname(), request.getSurname(), imgUrl);
         loginUserService.signUpUser(loginUser);
     }
