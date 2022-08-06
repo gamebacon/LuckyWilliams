@@ -1,8 +1,8 @@
 
 <div>
   <img src="preview/login.png" width="200px"/>
+  <img src="preview/register.png" width="200px"/>
 </div>
-  
   
   
   
