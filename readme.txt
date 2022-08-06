@@ -1,4 +1,4 @@
-![Screenshot](home.png)
+![Screenshot](pics/home.png)
 
 
 * Before starting the program you need to define database details in application.properties
