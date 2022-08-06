@@ -1,6 +1,7 @@
 # This was my school project with spring boot & mysql database
+## This project features a fullstack online casino, with a user system, currency system & 3 playable games.
 
-## Some preview images
+### Some preview images
 <div>
   <img src="preview/login.png" width="45%"/>
   <img src="preview/register.png" width="45%"/>
