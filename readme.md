@@ -1,5 +1,5 @@
 # This was my school project with spring boot & mysql database
-## This project features a fullstack online casino including a user system, currency & 3 playable games.
+## This project features an online casino including a user system, email confirmation, currency & 3 playable games.
 
 ### Some preview images
 <div>
