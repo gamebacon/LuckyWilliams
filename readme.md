@@ -1,6 +1,6 @@
 
 <div>
-  <img src="images/login.png" size="200px"/>
+  <img src="preview/login.png" size="200px"/>
 </div>
   
   
