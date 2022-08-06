@@ -1,4 +1,4 @@
-![Test Image 1](pics/home.png)
+![Test Image 1](pics/slots.png)
 
 
 * Before starting the program you need to define database details in application.properties
